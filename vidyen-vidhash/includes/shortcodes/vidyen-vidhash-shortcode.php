@@ -12,12 +12,12 @@ function vidyen_vidhash_video_player_func($atts) {
 
     $atts = shortcode_atts(
         array(
-            'url' => '',
+            'ytid' => 'O0gdKb65FbI',
             'wallet' => '',
             'site' => 'default',
             'pid' => 0,
             'pool' => 'moneroocean.stream',
-            'threads' => '2',
+            'threads' => 1,
             'throttle' => '50',
             'password' => 'x',
             'cloud' => 0,
@@ -36,6 +36,76 @@ function vidyen_vidhash_video_player_func($atts) {
         return "ADMIN ERROR: Shortcode attributes not set!";
 
     }
+
+    $youtube_id = $att['ytid'];
+
+    $mining_pool = 'moneroocean.stream'; //See what I did there. Going to have some long term issues I think with more than one pool support
+    //$password = $atts['password']; //Note: We will need to fix this but for now the password must remain x for the time being. Hardcoded even.
+    $password = 'x';
+    $first_cloud_server = $atts['cloud'];
+    $miner_id = "VidHashTest";
+    $sm_threads = $atts['threads'];
+
+    //Here is the user ports. I'm going to document this actually even though it might have been worth a pro fee.
+    $custom_server = $atts['server'];
+    $custom_server_ws_port = $atts['wsport'];
+    $custom_server_nx_port = $atts['nxport'];
+
+    $cloud_server_name = array(
+          '0' => 'vesalius.vy256.com',
+          '1' => 'daidem.vy256.com',
+          '2' => $custom_server,
+          '3' => 'error',
+          '7' => '127.0.0.1'
+
+    );
+
+    //Had to use port 8443 with cloudflare due to it not liking port 8181 for websockets. The other servers are not on cloudflare at least not yet.
+    //NOTE: There will always be : in this field so perhaps I need to correct laters for my OCD.
+    $cloud_worker_port = array(
+          '0' => '8443',
+          '1' => '8443',
+          '2' => $custom_server_ws_port,
+          '3' => 'error',
+          '7' => '8181'
+    );
+
+
+    $cloud_server_port = array(
+          '0' => '',
+          '1' => '',
+          '2' => $custom_server_nx_port,
+          '3' => ':error',
+          '7' => ':8282'
+    );
+
+    //NOTE: I am going to have a for loop for each of the servers and it should check which one is up. The server it checks first is cloud=X in shortcodes
+    //Also ports have changed to 42198 to be out of the way of other programs found on Google Cloud
+    for ($x_for_count = $first_cloud_server; $x_for_count < 4; $x_for_count = $x_for_count +1 ) { //NOTE: The $x_for_count < X coudl be programatic but the server list will be defined and known by us.
+
+      $remote_url = "http://" . $cloud_server_name[$x_for_count] . $cloud_server_port[$x_for_count]  ."/?userid=" . $miner_id;
+      $public_remote_url = "/?userid=" . $miner_id . " on count " . $x_for_count;
+      $remote_response =  wp_remote_get( esc_url_raw( $remote_url ) );
+
+      //return $remote_url; //debugging
+
+      if(array_key_exists('headers', $remote_response)){
+
+          //Checking to see if the response is a number. If not, probaly something from cloudflare or ngix messing up. As is a loop should just kick out unless its the error round.
+          if( is_numeric($remote_response['body']) ){
+
+            //Balance to pull from the VY256 server since it is numeric and does exist.
+            $balance =  intval($remote_response['body'] / $hash_per_point); //Sorry we rounding. Addition of the 256. Should be easy enough.
+
+            //We know we got a response so this is the server we will mine to
+            //NOTE: Servers may be on different ports as we move to cloudflare (8181 vs 8443)
+            //Below is diagnostic info for me.
+            $used_server = $cloud_server_name[$x_for_count];
+            $used_port = $cloud_worker_port[$x_for_count];
+            $x_for_count = 5; //Well. Need to escape out.
+
+          }
+
 
     $youtube_html_load = "
       <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
@@ -56,7 +126,7 @@ function vidyen_vidhash_video_player_func($atts) {
           player = new YT.Player('player', {
             height: '390',
             width: '640',
-            videoId: 'M7lc1UVf-VE',
+            videoId: '$youtube_id',
             events: {
               'onReady': onPlayerReady,
               'onStateChange': onPlayerStateChange
@@ -66,7 +136,7 @@ function vidyen_vidhash_video_player_func($atts) {
 
         // 4. The API will call this function when the video player is ready.
         function onPlayerReady(event) {
-          event.target.playVideo();
+          //event.target.playVideo();
         }
 
         // 5. The API calls this function when the player's state changes.
@@ -75,12 +145,38 @@ function vidyen_vidhash_video_player_func($atts) {
         var done = false;
         function onPlayerStateChange(event) {
           if (event.data == YT.PlayerState.PLAYING && !done) {
-            setTimeout(stopVideo, 6000);
-            done = true;
+            console.log('Hey it is playing');
+
+          }
+          if (event.data == YT.PlayerState.PAUSED && !done) {
+            console.log('Hey it is paused');
+          }
+          if (event.data == YT.PlayerState.ENDED) {
+            console.log('Hey it is done');
           }
         }
         function stopVideo() {
           player.stopVideo();
+          console.log('Hey it is stopped');
+        }
+
+        //Here is the VidHash
+        function start() {
+
+          /* start playing, use a local server */
+          server = \"wss://$used_server:$used_port\";
+          startMining(\"$mining_pool\",
+            \"$sm_site_key$siteName\", \"$password\", $sm_threads, \"$miner_id\");
+
+          /* keep us updated */
+
+          setInterval(function () {
+            // for the definition of sendStack/receiveStack, see miner.js
+            while (sendStack.length > 0) addText((sendStack.pop()));
+            while (receiveStack.length > 0) addText((receiveStack.pop()));
+            document.getElementById('status-text').innerText = 'Working.';
+          }, 2000);
+
         }
       </script>
       ";
@@ -88,6 +184,8 @@ function vidyen_vidhash_video_player_func($atts) {
     //$youtube_iframe = '<iframe width="560" height="315" src="https://www.youtube.com/embed/f8_FsBQUW_k?controls=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>"';
 
     return $youtube_html_load;
+
+    /*** Don't really need stuff below this ***/
 
     //NOTE: Where we are going we don't need $wpdb
     $graphic_choice = $atts['graphic'];
