@@ -2,31 +2,17 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-//VY256 Worker Shortcode. Note the euphemisms.
+//VidHash Player Shortcode. Note the euphemisms.
 
-function vyps_vy256_solver_func($atts) {
+function vidyen_vidhash_video_player_func($atts) {
 
-    //Ok. Some shortcode defaults. Thread and throttle are optional
-    //but I'm not going to let people start at 100% unless they mean it.
-    //So by default the miner starts with 1 thread at 10% and the users
-    //Can crank it up if they want.
-    //ALso I'm putting in VidYen's test server API keys as defaults
-    //But I will put a warning that you did not set the keys but you are
-    //earning VidYen hashes directly. I mean you can do that, but...
-    //I try not to question the "Why would?" scenarios these days.
-    //-Felty
-
-
-    //I felt it easier to just check if user is logged in and just do nothing at that point.
-    //Admins can use the VYPS login check to warn people they need to be logged in.
-    if ( ! is_user_logged_in() ){
-
-        return;
-
-    }
+    //Some naming conventions. We will not use the word miner or worker
+    //The functions will simply be... video player etc etc
+    //Yes the JS files haven't been renamed yet, but lets get to that
 
     $atts = shortcode_atts(
         array(
+            'url' => '',
             'wallet' => '',
             'site' => 'default',
             'pid' => 0,
@@ -38,29 +24,22 @@ function vyps_vy256_solver_func($atts) {
             'server' => 'cadia.vy256.com', //This and the next three are used for custom servers if the end user wants to roll their own
             'wsport' => '8181', //The WebSocket Port
             'nxport' => '', //The nginx port... By default its (80) in the browser so if you run it on a custom port for hash counting you may do so here
-            'graphic' => 'rand',
-            'shareholder' => '',
-            'refer' => 0,
             'pro' => '',
             'hash' => 1024,
-            'cstatic' => '',
-            'cworker'=> '',
-            'timebar' => 'yellow',
-            'timebartext' => 'white',
-            'workerbar' => 'orange',
-            'workerbartext' => 'white',
-            'redeembtn' => 'Redeem',
-            'startbtn' => 'Start Mining',
         ), $atts, 'vyps-256' );
 
     //Error out if the PID wasn't set as it doesn't work otherwise.
     //In theory they still need to consent, but no Coinhive code will be displayed
     //until the site admin fixes it. I suppose in theory one could set a negative number -Felty
-    if ($atts['pid'] == 0){
+    if ($atts['wallet'] == '' OR $atts['url'] == ''){
 
-        return "ADMIN ERROR: Point ID not set!";
+        return "ADMIN ERROR: Shortcode attributes not set!";
 
     }
+
+    $youtube_iframe = '<iframe width="560" height="315" src="https://www.youtube.com/embed/f8_FsBQUW_k?controls=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>"';
+
+    return $youtube_iframe;
 
     //NOTE: Where we are going we don't need $wpdb
     $graphic_choice = $atts['graphic'];
@@ -586,48 +565,4 @@ function vyps_vy256_solver_func($atts) {
 
 /* Telling WP to use function for shortcode for sm-consent*/
 
-add_shortcode( 'vyps-256', 'vyps_vy256_solver_func');
-
-
-
-/* Shortcode for the API call to create a lot entry */
-/* There is some debate if this should be a button, but I'm just going to run on the code on page load and the admins can just make a button that runs the smart code if they want */
-
-function vyps_solver_consent_button_func( $atts ) {
-    if(!isset($_POST['consent']) && !isset($_POST['redeem'])){
-
-        //Going to grab the site name and put it into the message
-        $site_disclaim_name = get_bloginfo('name');
-
-        //Some shortcode attributes to create custom button message
-        $atts = shortcode_atts(
-            array(
-
-              'text' => 'I agree and consent',
-              'disclaimer' => "By clicking the button you consent to have your browser mine cryptocurrency and to exchange it with $site_disclaim_name for points. This will use your device’s resources, so we ask you to be mindful of your CPU and battery use.",
-
-            ), $atts, 'vyps-ch-consent' );
-
-        $button_text = $atts['text'];
-        $disclaimer_text = $atts['disclaimer'];
-
-        /* User needs to be logged into consent. NO EXCEPTIONS */
-
-        if ( is_user_logged_in() ) {
-
-            return "$disclaimer_text<br><br>
-                <form method=\"post\">
-                <input type=\"hidden\" value=\"\" name=\"consent\"/>
-                <input type=\"submit\" class=\"button-secondary\" value=\"$button_text\" onclick=\"return confirm('Did you read everything and consent to letting this page browser mine with your CPU?');\" />
-                </form>";
-
-        } else {
-
-            return; //NOTE: Admin should use a [vyps-lg] code.
-
-        }
-    }
-
-}
-
-add_shortcode( 'vyps-256-consent', 'vyps_solver_consent_button_func');
+add_shortcode( 'vy-vidhash', 'vidyen_vidhash_video_player_func');

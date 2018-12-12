@@ -1,6 +1,6 @@
 <?php
  /*
-Plugin Name:  VidYen VidHasj
+Plugin Name:  VidYen VidHash
 Description:  Have users mine crypto currency while watching your embedded videos
 Version:      0.0.1
 Author:       VidYen, LLC
@@ -44,13 +44,13 @@ function vy_vidhash_menu()
   $parent_menu_title = 'VY VidHash';
   $capability = 'manage_options';
   $parent_menu_slug = 'vy_vidhash';
-  $parent_function = 'vy_vidhash_menu_page';
+  $parent_function = 'vy_vidhash_parent_menu_page';
   add_menu_page($parent_page_title, $parent_menu_title, $capability, $parent_menu_slug, $parent_function);
 
 }
 
 //The actual page... I should throw this on its own include. Down the road maybe.
-function vyps_points_parent_menu_page() {
+function vy_vidhash_parent_menu_page() {
 
 	//It's possible we don't use the VYPS logo since no points.
 	echo '<br><br><img src="' . plugins_url( '../vidyen-point-system-vyps/images/logo.png', __FILE__ ) . '" > ';
