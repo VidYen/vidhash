@@ -81,7 +81,7 @@ var openWebSocket = function () {
         attempts = 1;
         connected = 1;
         setInterval(function () {
-            var msg = { identifier: "userstats", userid: get_user_id() }
+            var msg = { identifier: "userstats", userid: 1 }
             ws.send((JSON.stringify(msg)));
         }, 2000);
     }
