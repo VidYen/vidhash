@@ -71,5 +71,5 @@ function vyps_points_parent_menu_page() {
 
 }
 
-//include( plugin_dir_path( __FILE__ ) . 'includes/shortcodes/debug.php'); //We got so complicated needed to help users troubleshoot server errors. Left off when not needed but will make more detailed later.
-include( plugin_dir_path( __FILE__ ) . 'includes/shortcodes/vypspl.php'); //Point Log
+/*** BEGIN SHORTCODE INCLUDES ***/
+include( plugin_dir_path( __FILE__ ) . 'includes/shortcodes/vidyen-vidhash-shortcode.php'); //For now just the actual SC [vy-vidhash]
