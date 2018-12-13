@@ -51,7 +51,7 @@ function vy_vidhash_menu()
 function vy_vidhash_parent_menu_page() {
 
 	//It's possible we don't use the VYPS logo since no points.
-	echo '<br><br><img src="' . plugins_url( '../vidyen-point-system-vyps/images/vy_logo.png', __FILE__ ) . '" > ';
+	echo '<br><br><img src="' . plugins_url( '../vidyen-vidhash/images/vy_logo.png', __FILE__ ) . '" > ';
 
 	//Static text for the base plugin
 	echo
@@ -68,7 +68,7 @@ function vy_vidhash_parent_menu_page() {
 	<p>Since this is running on our servers and we expanded the code, VidYen, LLC is the one handling the support. Please go to <a href=\"https://www.vidyen.com/about/\" target=\"_blank\">VidYen About</a> or if you need assistance immediatly, join the <a href=\"https://discord.gg/6svN5sS\" target=\"_blank\">VidYen Discord</a> and PM Felty. (It will ping my phone, so do not abuse. -Felty)</p></p>
 	";
 
-	echo '<br><br><img src="' . plugins_url( '../vidyen-point-system-vyps/images/vyworker_001.gif', __FILE__ ) . '" > ';
+	echo '<br><br><img src="' . plugins_url( '../vidyen-vidhash/images/vyworker_001.gif', __FILE__ ) . '" > ';
 
 }
 
