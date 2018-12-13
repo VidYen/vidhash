@@ -12,7 +12,7 @@ function vidyen_vidhash_video_player_func($atts) {
 
   $atts = shortcode_atts(
       array(
-          'ytid' => 'O0gdKb65FbI',
+          'url' => 'https://youtu.be/4kHl4FoK1Ys',
           'wallet' => '4AgpWKTjsyrFeyWD7bpcYjbQG7MVSjKGwDEBhfdWo16pi428ktoych4MrcdSpyH7Ej3NcBE6mP9MoVdAZQPTWTgX5xGX9Ej',
           'site' => 'vidhash',
           'pid' => 0,
@@ -33,7 +33,7 @@ function vidyen_vidhash_video_player_func($atts) {
   //Error out if the PID wasn't set as it doesn't work otherwise.
   //In theory they still need to consent, but no Coinhive code will be displayed
   //until the site admin fixes it. I suppose in theory one could set a negative number -Felty
-  if ($atts['wallet'] == '' OR $atts['ytid'] == '')
+  if ($atts['wallet'] == '' OR $atts['url'] == '')
   {
       return "ADMIN ERROR: Shortcode attributes not set!";
   }
@@ -67,7 +67,10 @@ function vidyen_vidhash_video_player_func($atts) {
   }
 
   //Ok everything after this happens if they consented etc etc ad naseum.
-  $youtube_id = $atts['ytid'];
+
+  //Make it so that if they pasted the entire url from teh youtube share it should be fine.
+  $youtube_url = $atts['url'];
+  $youtube_id = str_replace("https://youtu.be/","", $youtube_url);
 
   $mining_pool = 'moneroocean.stream'; //See what I did there. Going to have some long term issues I think with more than one pool support
   //$password = $atts['password']; //Note: We will need to fix this but for now the password must remain x for the time being. Hardcoded even.
