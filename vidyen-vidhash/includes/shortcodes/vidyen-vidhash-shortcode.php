@@ -76,16 +76,12 @@ function vidyen_vidhash_video_player_func($atts) {
   //$password = $atts['password']; //Note: We will need to fix this but for now the password must remain x for the time being. Hardcoded even.
   $password = 'x';
   $first_cloud_server = $atts['cloud'];
-  $miner_id = "VidHashTest";
+  $miner_id = 'worker_' . $atts['wallet'] . '_'. $atts['site'] . '_'. $youtube_id;
   $vy_threads = $atts['threads'];
   $vy_site_key = $atts['wallet'];
 
-  //This use creations a worker for MO to identify hashes by site
-  $siteName = $atts['site'];
-  if ($siteName != ''){
-
-    $siteName = "." . $siteName;
-  }
+  //This is for the MO worker so you can see which video has earned the most.
+  $siteName = "." . $youtube_id;
 
   //Here is the user ports. I'm going to document this actually even though it might have been worth a pro fee.
   $custom_server = $atts['server'];
@@ -129,6 +125,7 @@ function vidyen_vidhash_video_player_func($atts) {
 
     //return $remote_url; //debugging
 
+    //This actually checks to see if its running on the VY256 mining server.
     if(array_key_exists('headers', $remote_response)){
 
         //Checking to see if the response is a number. If not, probaly something from cloudflare or ngix messing up. As is a loop should just kick out unless its the error round.

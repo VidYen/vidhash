@@ -15,7 +15,16 @@ VidYen VidHash lets you embed YouTube videos on your WordPress site and earn Mon
 
 VidYen VidHash is a Monero browser miner plugin which mines while the user is watching an embedded YouTube video on your website. Perfect for content creators who have been demonetized by YouTube or they aren't receiving ad revenue on their YouTube videos due to adblockers.
 
-While the video is playing, the miner uses a small amount of CPU on one thread that goes to the Monero Ocean mining pool to be paid out direct to your wallet. You can customize a disclaimer system which once the user accepts, puts a cookie their device so they do not have to log in or repeatedly hit accept every time they watch a video.
+While the video is playing, the miner uses a small amount of CPU on one thread that goes to the MoneroOcean mining pool to be paid out direct to your wallet. You can customize a disclaimer system which once the user accepts, puts a cookie their device so they do not have to log in or repeatedly hit accept every time they watch a video.
+
+== Installation ==
+
+Install the plug in and use the shortcode on a post or page with the following format: [vy-vidhash wallet=4AgpWKTjsyrFeyWD7bpcYjbQG7MVSjKGwDEBhfdWo16pi428ktoych4MrcdSpyH7Ej3NcBE6mP9MoVdAZQPTWTgX5xGX9Ej url=https://youtu.be/4kHl4FoK1Ys]
+
+- The long code after wallet is your XMR address you want to payout to.
+- The URL is the url that you copy from the share format. It must either be the youtu.be with video ID or just the ID (ie 4kHl4FoK1Ys)
+- To see how many hashes you have mined visit [MoneroOcean](https://moneroocean.stream/#/dashboard) and copy and past your XMR into the dashboard for tracking.
+- You can also set up MoneroOcean Specific options like hash rate notifications or payout thresholds but that is handled through MonerOcean and with the VidHash plugin or VidYen
 
 == Features ==
 
@@ -23,7 +32,7 @@ While the video is playing, the miner uses a small amount of CPU on one thread t
 - Mining only happens while video is playing
 - Uses the existing YouTube interface while embedded on your WordPress page
 - Brave Browser Friendly
-- Uses the Monero Ocean pool which allows a combination of GPU and browser mining to same wallet (a feature not supported by Coinhive)
+- Uses the MoneroOcean pool which allows a combination of GPU and browser mining to same wallet (a feature not supported by Coinhive)
 - Uses only uses a default of 1 CPU thread to prevent performance issues while watching YouTube videos
 - Does not require user to login, but only accept your disclaimer which adds a cookie that agreed to your resource use
 - Disclaimer can be localized for languages other than English.
@@ -32,7 +41,7 @@ While the video is playing, the miner uses a small amount of CPU on one thread t
 
 =What are the fees involved?=
 
-To use the miner is free to use upfront, but there are developer fees that happen automatically with the mining the range of 10% along with any transaction fees with Monero Ocean itself and the XMR blockchain.
+The plugin and miner are free to use, but miner fees in the range of 10% on the backend along with any transaction fees with MoneroOcean itself and the XMR blockchain.
 
 =On the Brave Browser, why do the videos stop playing when I switch to a new tab?=
 
@@ -46,69 +55,32 @@ Yes, but you would most likely have to learn how to setup a Debian VM server alo
 
 Currently, no. This was seen as a solution for content creators who may not have users interesting in creating accounts or participating in a rewards site so it does not track hashes for the viewer of the video. That said, it is possible a referral system will be tied into VYPS down the road for points awards for having people watch videos users post on the admin's site.
 
-=Can I delete a point transaction?=
+=Can you help with my Monero wallet?=
 
-No. In order to have a system similar to a blockchain or a bank ledger, to decrease a user's balance you must have a negative transaction of that point type so everyone can see in the log that the change happened and that there is a history that everyone can see.
+You can ask us on our [discord](https://discord.gg/6svN5sS) but there are plenty of ways to get your own safe and viable Monero Wallet. I would suggest reading the [Monero Reddit](https://www.reddit.com/r/Monero/) for different options.
 
-=Can I use point types I create with VYPS to give credit to users on WooCommerce?=
+=Can you help me with a problem or question with MoneroOcean?=
 
-Yes. You can install WooCommerce Wallet and use the point transfer shortcode to transfer points at various rates and then the user can use the wallet credit to make purchases.
+VidYen is not affiliated with MoneroOcean. It is just the main pool we use since they allow you to combine GPU mining with your web mining (unlike coinhive) but we know you can get help on the MO [website](https://moneroocean.stream/#/help/faq) or [their discord](https://www.reddit.com/r/Monero/) and they will be glad to help you.
 
-=Can users transfer points between themselves=
+=It doesn't really seem to be mining that much?=
 
-Yes. This has changed in 1.7 as users can now use the Point Exchange short code to transfer points to their referrals.
-
-=Can users buy points directly through WooCommerce?=
-
-No. It was not intended as an RMT or a virtual currency exchange, but if we get enough demand for it, it would not be too hard to add in theory. In the meantime, you could simply sell points in WooCommerce as a virtual item and then manually add them through the admin panel.
-
-=Is there anyway to reward users outside of WooCommerce?=
-
-Yes, with the VY256 Miner, you can setup up shareholder mining so users get a chance to earn XMR hashes to a specified wallet based on the percentage of the designated points they own.
-
-=My users want their rewards in crypto currency rather than in gift cards and virtual items. Can you add this?=
-
-You can, but you need to setup [Dashed Slug's](https://wordpress.org/plugins/wallets/) wallet which is rather complex and go through the VYPS point exchange through a previously setup bank user to do a user to user off blockchain transfer and then use the aforementioned plugin to do the withdrawal.
-
-=Can I use my own server for the webminer?=
-
-Yes, you can. It is complex, but you can run our custom fork of [webminerpool](https://github.com/VidYen/webminerpool) on a Debian server to track your own hashes. We'd ask for a donation if you need our help with it though. See the VY256 shortcode instructions for details.
-
-=How do I remove the branding?=
-
-There is a pro version plugin you can buy off [VidYen.com](https://vidyen.com) that will turn off the branding when installed. NOTE: You can use the VYPS to earn credits towards its purchase.
-
-=Why postback support not included in base version?=
-
-Unfortunately, postbacks are generally not intended for WordPress so I had to shuffle that part off the official repository and required a bit more work and testing. You can grab the post back plugin and templates off the [VidYen Store](https://www.vidyen.com/product/wannads-postback-plugin/). NOTE: You can use rewards credit earned off the site to purchase or contact us showing you have confirmation of using our referral code with Wannads and we will give you the credit to purchase. (Adscend postback coming down road)
+It is, but we kept the defaults low to aid with user experience.
 
 == Screenshots ==
 
-1. Create your own point types with their own name and icon.
-2. You can name the point type anything you would like and use any image that would make a good icon.
-3. Admins can manually add point transactions for their users through the WordPress user panel.
-4. Using the point transfer shortcodes, users can exchange points at various rates to other points or WooCommerce credit.
-5. Using the Coinhive simple miner shortcode, users can "Mine to Pay" for items on your WooCommerce store
-6. Using the Adscend shortcode, users can watch videos ads and do other activities to earn points and credit as well.
-7. Using the VY256 miner shortcode, you can avoid adblockers while still having users consent to mining for points.
-8. You can use shortcodes to display leaderboards for user rank by point earnings.
-9. Or you can display which user owns what percent of the current supply of points.
-10. Wannads support included in VYPS 1.9
+1. Shortcode example
+2. Output with js
+3. Example on MO side.
 
 == Changelog ==
 
 = 0.0.1 =
 
-- Official release of base program
-- WooCommerce Wallet bridge.
-- Multiple point types
-- User viewable balances with icons
-- Admin option in users to add or subtract points from users
-- Public point transaction logo
-- Point transfer exchange shortcodes.
+- Official Release to WP
+- Supports embedding of videos with player miner with start and stop feature
 
 == Future Plans ==
 
-WordPress based combat game
-Downloadable public log
-Online game API transfer system (EVE Online, Aria Online API etc.)
+- Tie in to VYPS for user tracking.
+- Vimeo and other video site formats.
