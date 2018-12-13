@@ -262,6 +262,9 @@ add_shortcode( 'vy-vidhash', 'vidyen_vidhash_video_player_func');
 // register the ajax action for authenticated users
 add_action('wp_ajax_vy_vidhash_consent_action', 'vy_vidhash_consent_action');
 
+//register the ajax for non authenticated users
+add_action( 'wp_ajax_nopriv_vy_vidhash_consent_action', 'vy_vidhash_consent_action' );
+
 // handle the ajax request
 function vy_vidhash_consent_action()
 {
