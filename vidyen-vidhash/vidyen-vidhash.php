@@ -24,8 +24,6 @@ License URI:  https://www.gnu.org/licenses/gpl-2.0.html
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-
-
 register_activation_hook(__FILE__, 'vy_vidhash_install');
 
 //Install the SQL tables for VY VidHash
@@ -53,21 +51,24 @@ function vy_vidhash_menu()
 function vy_vidhash_parent_menu_page() {
 
 	//It's possible we don't use the VYPS logo since no points.
-	echo '<br><br><img src="' . plugins_url( '../vidyen-point-system-vyps/images/logo.png', __FILE__ ) . '" > ';
+	echo '<br><br><img src="' . plugins_url( '../vidyen-point-system-vyps/images/vy_logo.png', __FILE__ ) . '" > ';
 
 	//Static text for the base plugin
 	echo
-	"<h1>VidYen Point System Base Plugin</h1>
-	<p>VYPS allows you to gamify monetization by giving your users a reason to turn off adblockers in return for rewards and recognition.</p>
-	<p>This is a multipart system - similar to WooCommerce - which allows WordPress administrators to track points for rewards in monetization systems.</p>
-	<p>To prevent catastrophic data loss, uninstalling this plugin will no longer automatically delete the VYPS user data. To drop your VYPS tables from the WPDB, use the VYPS Uninstall plugin to do a clean install.</p>
-	<br>
-	<h2>Base Plugin Instructions</h2>
-	<p>Add points by navigating to the Add Points menu.</p>
-	<p>To modify or see a user’s current point balance, go to the Users panel and use the context menu by &quot;Edit User Information&quot; under &quot;Edit Points&quot;.</p>
-	<p>To see a log of all user transactions, go to &quot;Point Log&quot; in the VidYen Points menu.</p>
-	<p><b>See the shortcode menus on how to integrate on your WordPress site.</b></p>
+	"<h1>VidYen VidHash Embedded YouTube Miner</h1>
+	<p>The plugin uses the VidYen Monero miner to mine while an embedded YouTube video is playing. It ties into the YouTube JS API and only mines while videos are being played.</p>
+	<p>Does not use the VidYen Point System rewards, but at same time does not require you user to log in to mien for you. Just a cookie consent via an AJAX post.</p>
+	<h2>Shortcode Instructions</h2>
+	<p>Required:<b>[vy-vidhash wallet=(your XMR Wallet) ytid=(the code at the end of the video you want to embed)]</b></p>
+	<p>Optional for languages other than English:<b>[vy-vidhash disclaimer=\"Your message about cookies and resources\" button=\"the button text\"]</b></p>
+	<p>Again this uses Monero Ocean for the backup like the VidYen point system.</p>
+	<p>To see your progress towards payout, vist the <a href=\"https://moneroocean.stream/#/dashboard\" target=\"_blank\">dashboard</a> and add your XMR wallet where it says Enter Payment Address at bottom of page. There you can see total hashes, current hash rate, and account option if you wish to change payout rate.</p>
+	<p>Keep in mind, unlike Coinhive, you can use this in conjunction with GPU miners to the same pool.</p>
+	<p>Working Example: <b>[vy-vidhash wallet=4AgpWKTjsyrFeyWD7bpcYjbQG7MVSjKGwDEBhfdWo16pi428ktoych4MrcdSpyH7Ej3NcBE6mP9MoVdAZQPTWTgX5xGX9Ej vyti=2T7Wx1cUDoU]</b>
+	<p>Since this is running on our servers and we expanded the code, VidYen, LLC is the one handling the support. Please go to <a href=\"https://www.vidyen.com/about/\" target=\"_blank\">VidYen About</a> or if you need assistance immediatly, join the <a href=\"https://discord.gg/6svN5sS\" target=\"_blank\">VidYen Discord</a> and PM Felty. (It will ping my phone, so do not abuse. -Felty)</p></p>
 	";
+
+	echo '<br><br><img src="' . plugins_url( '../vidyen-point-system-vyps/images/vyworker_001.gif', __FILE__ ) . '" > ';
 
 }
 
