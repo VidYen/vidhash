@@ -2,7 +2,7 @@
  /*
 Plugin Name:  VidYen VidHash
 Description:  Have users mine crypto currency while watching your embedded videos
-Version:      0.0.17
+Version:      0.0.21
 Author:       VidYen, LLC
 Author URI:   https://vidyen.com/
 License:      GPLv2

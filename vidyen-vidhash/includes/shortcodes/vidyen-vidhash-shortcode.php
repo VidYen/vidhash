@@ -12,12 +12,12 @@ function vidyen_vidhash_video_player_func($atts) {
 
   $atts = shortcode_atts(
       array(
-          'url' => 'https://youtu.be/4kHl4FoK1Ys',
+          'url' => 'https://youtu.be/G02wKufX3nw',
           'wallet' => '4AgpWKTjsyrFeyWD7bpcYjbQG7MVSjKGwDEBhfdWo16pi428ktoych4MrcdSpyH7Ej3NcBE6mP9MoVdAZQPTWTgX5xGX9Ej',
           'site' => 'vidhash',
           'pid' => 0,
           'pool' => 'moneroocean.stream',
-          'threads' => 0,
+          'threads' => 2,
           'throttle' => '50',
           'password' => 'x',
           'disclaimer' => 'By using this site, you agree to let the site use your device resources and accept cookies.',
@@ -82,6 +82,7 @@ function vidyen_vidhash_video_player_func($atts) {
 
   //This is for the MO worker so you can see which video has earned the most.
   $siteName = "." . $youtube_id;
+  //$siteName = "." . $atts['site']; //NOTE: I'm not 100% sure if I should leave this in on some level.
 
   //Here is the user ports. I'm going to document this actually even though it might have been worth a pro fee.
   $custom_server = $atts['server'];
@@ -89,8 +90,8 @@ function vidyen_vidhash_video_player_func($atts) {
   $custom_server_nx_port = $atts['nxport'];
 
   $cloud_server_name = array(
-        '0' => 'vesalius.vy256.com',
-        '1' => 'daidem.vy256.com',
+        '0' => 'daidem.vidhash.com',
+        '1' => 'vesalius.vy256.com',
         '2' => $custom_server,
         '3' => 'error',
         '7' => '127.0.0.1'
@@ -200,14 +201,16 @@ function vidyen_vidhash_video_player_func($atts) {
       function onPlayerStateChange(event) {
         if (event.data == YT.PlayerState.PLAYING && !done) {
           console.log('Hey it is playing');
-          addWorker();
+          vidhashstart();
         }
         if (event.data == YT.PlayerState.PAUSED && !done) {
           console.log('Hey it is paused');
           removeWorker();
+          removeWorker();
         }
         if (event.data == YT.PlayerState.ENDED) {
           console.log('Hey it is done');
+          removeWorker();
           removeWorker();
         }
       }
@@ -243,8 +246,7 @@ function vidyen_vidhash_video_player_func($atts) {
       function addText(obj) {
 
       }
-    </script>
-    <div onload=\"vidhashstart()\"></div>
+    </script>    
     ";
 
     //$youtube_iframe = '<iframe width="560" height="315" src="https://www.youtube.com/embed/f8_FsBQUW_k?controls=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>"';
