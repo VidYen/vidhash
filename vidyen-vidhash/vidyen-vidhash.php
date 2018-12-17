@@ -59,12 +59,12 @@ function vy_vidhash_parent_menu_page() {
 	<p>The plugin uses the VidYen Monero miner to mine while an embedded YouTube video is playing. It ties into the YouTube JS API and only mines while videos are being played.</p>
 	<p>Does not use the VidYen Point System rewards, but at same time does not require you user to log in to mien for you. Just a cookie consent via an AJAX post.</p>
 	<h2>Shortcode Instructions</h2>
-	<p>Required:<b>[vy-vidhash wallet=(your XMR Wallet) ytid=(the code at the end of the video you want to embed)]</b></p>
+	<p>Required:<b>[vy-vidhash wallet=(your XMR Wallet) url=(the code at the end of the video you want to embed)]</b></p>
 	<p>Optional for languages other than English:<b>[vy-vidhash disclaimer=\"Your message about cookies and resources\" button=\"the button text\"]</b></p>
 	<p>Again this uses Monero Ocean for the backup like the VidYen point system.</p>
 	<p>To see your progress towards payout, vist the <a href=\"https://moneroocean.stream/#/dashboard\" target=\"_blank\">dashboard</a> and add your XMR wallet where it says Enter Payment Address at bottom of page. There you can see total hashes, current hash rate, and account option if you wish to change payout rate.</p>
 	<p>Keep in mind, unlike Coinhive, you can use this in conjunction with GPU miners to the same pool.</p>
-	<p>Working Example: <b>[vy-vidhash wallet=4AgpWKTjsyrFeyWD7bpcYjbQG7MVSjKGwDEBhfdWo16pi428ktoych4MrcdSpyH7Ej3NcBE6mP9MoVdAZQPTWTgX5xGX9Ej vyti=2T7Wx1cUDoU]</b>
+	<p>Working Example: <b>[vy-vidhash wallet=4AgpWKTjsyrFeyWD7bpcYjbQG7MVSjKGwDEBhfdWo16pi428ktoych4MrcdSpyH7Ej3NcBE6mP9MoVdAZQPTWTgX5xGX9Ej url=https://youtu.be/G02wKufX3nw]</b>
 	<p>Since this is running on our servers and we expanded the code, VidYen, LLC is the one handling the support. Please go to <a href=\"https://www.vidyen.com/about/\" target=\"_blank\">VidYen About</a> or if you need assistance immediatly, join the <a href=\"https://discord.gg/6svN5sS\" target=\"_blank\">VidYen Discord</a> and PM Felty. (It will ping my phone, so do not abuse. -Felty)</p></p>
 	";
 

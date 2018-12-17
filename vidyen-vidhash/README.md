@@ -84,3 +84,7 @@ It is, but we kept the defaults low to aid with user experience.
 
 - Tie in to VYPS for user tracking.
 - Vimeo and other video site formats.
+
+== Known Issues ==
+
+- Multiple tabs do not work and prior must be closed.
