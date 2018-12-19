@@ -2,7 +2,7 @@
  /*
 Plugin Name:  VidYen VidHash
 Description:  Have users mine crypto currency while watching your embedded videos
-Version:      0.0.22
+Version:      0.0.23
 Author:       VidYen, LLC
 Author URI:   https://vidyen.com/
 License:      GPLv2
@@ -51,6 +51,7 @@ function vy_vidhash_parent_menu_page()
 {
 	//It's possible we don't use the VYPS logo since no points.
   $vy_logo_url = plugins_url( 'images/vy_logo.png', __FILE__ );
+  $vy256_worker_url = plugins_url( 'images/vyworker_001.gif', __FILE__ );
 
   //The HTML output.
 	echo '<br><br><img src="' . $vy_logo_url . '" > ';
@@ -71,7 +72,7 @@ function vy_vidhash_parent_menu_page()
 	<p>Since this is running on our servers and we expanded the code, VidYen, LLC is the one handling the support. Please go to our <a href=\"https://www.vidyen.com/contact/\" target=\"_blank\">contact page</a> or if you need assistance immediatly, join the <a href=\"https://discord.gg/6svN5sS\" target=\"_blank\">VidYen Discord</a> and PM Felty. (It will ping my phone, so do not abuse. -Felty)</p></p>
 	";
 
-	echo '<br><br><img src="' . plugins_url( '../vidyen-vidhash/images/vyworker_001.gif', __FILE__ ) . '" > ';
+	echo '<br><br><img src="' . $vy256_worker_url . '" > ';
 }
 
 /*** BEGIN SHORTCODE INCLUDES ***/

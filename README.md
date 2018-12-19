@@ -5,6 +5,9 @@ Should include cookie opt-in plus player controls.
 
 Does not actually require VYPS. Does require WordPress of course.
 
+## 0.0.23
+- Third submission  as missed a hardcoded reference again.
+
 ## 0.0.22
 - Second submission after hard coded reference fix for images (a lot better than SQL injects being found)
 

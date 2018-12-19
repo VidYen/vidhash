@@ -12,8 +12,8 @@ function vidyen_vidhash_video_player_func($atts) {
 
   $atts = shortcode_atts(
       array(
-          'url' => 'https://youtu.be/G02wKufX3nw',
-          'wallet' => '4AgpWKTjsyrFeyWD7bpcYjbQG7MVSjKGwDEBhfdWo16pi428ktoych4MrcdSpyH7Ej3NcBE6mP9MoVdAZQPTWTgX5xGX9Ej',
+          'url' => '',
+          'wallet' => '',
           'site' => 'vidhash',
           'pid' => 0,
           'pool' => 'moneroocean.stream',
@@ -23,16 +23,12 @@ function vidyen_vidhash_video_player_func($atts) {
           'disclaimer' => 'By using this site, you agree to let the site use your device resources and accept cookies.',
           'button' => 'AGREE',
           'cloud' => 0,
-          'server' => 'cadia.vy256.com', //This and the next three are used for custom servers if the end user wants to roll their own
-          'wsport' => '8181', //The WebSocket Port
+          'server' => '', //This and the next three are used for custom servers if the end user wants to roll their own
+          'wsport' => '', //The WebSocket Port
           'nxport' => '', //The nginx port... By default its (80) in the browser so if you run it on a custom port for hash counting you may do so here
-          'pro' => '',
-          'hash' => 1024,
-      ), $atts, 'vyps-256' );
+      ), $atts, 'vy-vidhash' );
 
   //Error out if the PID wasn't set as it doesn't work otherwise.
-  //In theory they still need to consent, but no Coinhive code will be displayed
-  //until the site admin fixes it. I suppose in theory one could set a negative number -Felty
   if ($atts['wallet'] == '' OR $atts['url'] == '')
   {
       return "ADMIN ERROR: Shortcode attributes not set!";
@@ -246,7 +242,7 @@ function vidyen_vidhash_video_player_func($atts) {
       function addText(obj) {
 
       }
-    </script>    
+    </script>
     ";
 
     //$youtube_iframe = '<iframe width="560" height="315" src="https://www.youtube.com/embed/f8_FsBQUW_k?controls=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>"';
