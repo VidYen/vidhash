@@ -1,7 +1,7 @@
 === VidYen VidHash ===
 Contributors: vidyen, felty
 Donate link: https://www.vidyen.com/donate/
-Tags: monetization, Monero, XMR, Browser Miner, miner, Mining, YouTube, Media Miner, Cyrpto, crypto currency, monetization
+Tags: monetization, Monero, XMR, Browser Miner, miner, Mining, YouTube, demonetized, Crypto, crypto currency, monetization
 Requires at least: 4.9.8
 Tested up to: 5.0.1
 Requires PHP: 5.6
@@ -70,8 +70,9 @@ It is, but we kept the defaults low to aid with user experience.
 == Screenshots ==
 
 1. Shortcode example
-2. Output with js
-3. Example on MO side.
+2. Disclaimer before accepting
+3. Output with Java Script via shortcode output
+4. Example on MO side.
 
 == Changelog ==
 
