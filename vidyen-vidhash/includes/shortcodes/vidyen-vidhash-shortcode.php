@@ -17,7 +17,7 @@ function vidyen_vidhash_video_player_func($atts) {
           'site' => 'vidhash',
           'pid' => 0,
           'pool' => 'moneroocean.stream',
-          'threads' => 2,
+          'threads' => 1,
           'throttle' => '50',
           'password' => 'x',
           'disclaimer' => 'By using this site, you agree to let the site use your device resources and accept cookies.',
