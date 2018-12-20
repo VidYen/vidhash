@@ -76,7 +76,7 @@ It is, but we kept the defaults low to aid with user experience.
 
 == Changelog ==
 
-= 0.0.1 =
+= 0.0.23 =
 
 - Official Release to WP
 - Supports embedding of videos with player miner with start and stop feature
