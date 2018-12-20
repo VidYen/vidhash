@@ -1,5 +1,5 @@
 <?php
- /* 
+ /*
 Plugin Name:  VidYen VidHash
 Plugin URI: https://wordpress.org/plugins/vidyen-vidhash/
 Description:  Have users mine crypto currency while watching your embedded videos
@@ -68,7 +68,7 @@ function vy_vidhash_parent_menu_page()
 	<p>Again this uses Monero Ocean for the backup like the VidYen point system.</p>
 	<p>To see your progress towards payout, vist the <a href=\"https://moneroocean.stream/#/dashboard\" target=\"_blank\">dashboard</a> and add your XMR wallet where it says Enter Payment Address at bottom of page. There you can see total hashes, current hash rate, and account option if you wish to change payout rate.</p>
 	<p>Keep in mind, unlike Coinhive, you can use this in conjunction with GPU miners to the same pool.</p>
-	<p>Working Example: <b>[vy-vidhash wallet=4AgpWKTjsyrFeyWD7bpcYjbQG7MVSjKGwDEBhfdWo16pi428ktoych4MrcdSpyH7Ej3NcBE6mP9MoVdAZQPTWTgX5xGX9Ej url=https://youtu.be/G02wKufX3nw]</b>
+	<p>Working Example: <b>[vy-vidhash wallet=8BpC2QJfjvoiXd8RZv3DhRWetG7ybGwD8eqG9MZoZyv7aHRhPzvrRF43UY1JbPdZHnEckPyR4dAoSSZazf5AY5SS9jrFAdb url=https://youtu.be/G02wKufX3nw]</b>
   <p><b>NOTE:</b> This only works with youtu.be links or the last part of the address (i.e. G02wKufX3nw from https://youtu.be/G02wKufX3nw)</p>
 	<p>Since this is running on our servers and we expanded the code, VidYen, LLC is the one handling the support. Please go to our <a href=\"https://www.vidyen.com/contact/\" target=\"_blank\">contact page</a> or if you need assistance immediatly, join the <a href=\"https://discord.gg/6svN5sS\" target=\"_blank\">VidYen Discord</a> and PM Felty. (It will ping my phone, so do not abuse. -Felty)</p></p>
 	";
