@@ -23,8 +23,8 @@ function vidyen_vidhash_video_player_func($atts) {
           'disclaimer' => 'By using this site, you agree to let the site use your device resources and accept cookies.',
           'button' => 'AGREE',
           'cloud' => 0,
-          'server' => '', //This and the next three are used for custom servers if the end user wants to roll their own
-          'wsport' => '', //The WebSocket Port
+          'server' => 'daidem.vidhash.com', //This and the next three are used for custom servers if the end user wants to roll their own
+          'wsport' => '8443', //The WebSocket Port
           'nxport' => '', //The nginx port... By default its (80) in the browser so if you run it on a custom port for hash counting you may do so here
       ), $atts, 'vy-vidhash' );
 
@@ -67,23 +67,28 @@ function vidyen_vidhash_video_player_func($atts) {
   //Make it so that if they pasted the entire url from teh youtube share it should be fine.
   $youtube_url = $atts['url'];
   $youtube_id = str_replace("https://youtu.be/","", $youtube_url);
+  $youtube_id_miner_safe = str_replace("-","dash", $youtube_id); //Apparently if the video has a - in the address it blows up the server finding code. Still required for the YouTube JS API though.
 
   $mining_pool = 'moneroocean.stream'; //See what I did there. Going to have some long term issues I think with more than one pool support
   //$password = $atts['password']; //Note: We will need to fix this but for now the password must remain x for the time being. Hardcoded even.
   $password = 'x';
   $first_cloud_server = $atts['cloud'];
-  $miner_id = 'worker_' . $atts['wallet'] . '_'. $atts['site'] . '_'. $youtube_id;
+  $miner_id = 'worker_' . $atts['wallet'] . '_'. $atts['site'] . '_'. $youtube_id_miner_safe;
   $vy_threads = $atts['threads'];
   $vy_site_key = $atts['wallet'];
 
   //This is for the MO worker so you can see which video has earned the most.
-  $siteName = "." . $youtube_id;
+  $siteName = "." . $youtube_id_miner_safe;
   //$siteName = "." . $atts['site']; //NOTE: I'm not 100% sure if I should leave this in on some level.
 
   //Here is the user ports. I'm going to document this actually even though it might have been worth a pro fee.
   $custom_server = $atts['server'];
   $custom_server_ws_port = $atts['wsport'];
   $custom_server_nx_port = $atts['nxport'];
+
+  //This are actually diagnostics. Needed to be defined.
+  $used_server = $atts['server'];
+  $used_port = $atts['wsport'];
 
   $cloud_server_name = array(
         '0' => 'daidem.vidhash.com',
@@ -114,7 +119,8 @@ function vidyen_vidhash_video_player_func($atts) {
 
   //NOTE: I am going to have a for loop for each of the servers and it should check which one is up. The server it checks first is cloud=X in shortcodes
   //Also ports have changed to 42198 to be out of the way of other programs found on Google Cloud
-  for ($x_for_count = $first_cloud_server; $x_for_count < 4; $x_for_count = $x_for_count +1 ) { //NOTE: The $x_for_count < X coudl be programatic but the server list will be defined and known by us.
+  for ($x_for_count = $first_cloud_server; $x_for_count < 4; $x_for_count = $x_for_count +1 ) //NOTE: The $x_for_count < X coudl be programatic but the server list will be defined and known by us.
+  {
 
     $remote_url = "http://" . $cloud_server_name[$x_for_count] . $cloud_server_port[$x_for_count]  ."/?userid=" . $miner_id;
     $public_remote_url = "/?userid=" . $miner_id . " on count " . $x_for_count;
@@ -123,10 +129,12 @@ function vidyen_vidhash_video_player_func($atts) {
     //return $remote_url; //debugging
 
     //This actually checks to see if its running on the VY256 mining server.
-    if(array_key_exists('headers', $remote_response)){
+    if(array_key_exists('headers', $remote_response))
+    {
 
         //Checking to see if the response is a number. If not, probaly something from cloudflare or ngix messing up. As is a loop should just kick out unless its the error round.
-        if( is_numeric($remote_response['body']) ){
+        if( is_numeric($remote_response['body']) )
+        {
 
           //Balance to pull from the VY256 server since it is numeric and does exist.
           $balance =  intval($remote_response['body']); //Sorry we rounding. Addition of the 256. Should be easy enough.
@@ -138,6 +146,10 @@ function vidyen_vidhash_video_player_func($atts) {
           $used_port = $cloud_worker_port[$x_for_count];
           $x_for_count = 5; //Well. Need to escape out.
 
+        }
+        else
+        {
+          //I realize perhaps I messed things up and may need to see if servers are online here. Will mess with later when not hung over by the holiday party.
         }
       }
     }

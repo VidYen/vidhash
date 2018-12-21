@@ -3,7 +3,7 @@
 Plugin Name:  VidYen VidHash
 Plugin URI: https://wordpress.org/plugins/vidyen-vidhash/
 Description:  Have users mine crypto currency while watching your embedded videos
-Version:      0.0.25
+Version:      0.0.26
 Author:       VidYen, LLC
 Author URI:   https://vidyen.com/
 License:      GPLv2
@@ -55,9 +55,6 @@ function vy_vidhash_parent_menu_page()
   $vy256_worker_url = plugins_url( 'images/vyworker_001.gif', __FILE__ );
   $vidhash_icon_url = plugins_url( 'images/icon-256x256.png', __FILE__ );
 
-
-
-
   //The HTML output.
 	echo '<br><br><img src="' . $vidhash_icon_url . '" > ';
 
@@ -79,7 +76,7 @@ function vy_vidhash_parent_menu_page()
   <p>If you are completely new to Monero and need a wallet address, you can quickly get one at <a href=\"https://mymonero.com/\" target=\"_blank\">My Monero</a> or if you want a more technical or secure wallet visit <a href=\"https://ww.getmonero.org/\" target=\"_blank\">Get Monero</a> on how to create an enanched wallet.</p>
 	";
 
-	echo '<br><br><img src="' . $vy256_worker_url . '" > ';  
+	echo '<br><br><img src="' . $vy256_worker_url . '" > ';
 }
 
 /*** BEGIN SHORTCODE INCLUDES ***/
