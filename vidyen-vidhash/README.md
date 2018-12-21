@@ -76,17 +76,17 @@ It is, but we kept the defaults low to aid with user experience.
 
 == Changelog ==
 
-= 0.0.24 =
+= 1.0.24 =
 
 - Fix: Issue with urls with a `-` in the url causing page to leave error and not mine correctly.
 - Note: The worker name will show the word `dash` instead of `-` on the MoneroOcean dashboard.
 - Mod: Graphics change in the instructions menu.
 
-= 0.0.24 =
+= 1.0.24 =
 
 - Thread fix. Should be one now. This can be changed, but by default will now be one only.
 
-= 0.0.23 =
+= 1.0.23 =
 
 - Official Release to WP
 - Supports embedding of videos with player miner with start and stop feature
