@@ -5,6 +5,10 @@ Should include cookie opt-in plus player controls.
 
 Does not actually require VYPS. Does require WordPress of course.
 
+## 1.0.0
+
+- Official WordPress release
+
 ## 0.0.23
 - Third submission  as missed a hardcoded reference again.
 
