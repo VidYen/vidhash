@@ -21,9 +21,7 @@ While the video is playing, the miner uses a small amount of CPU on one thread t
 
 Install the plug in and use the shortcode on a post or page with the following format:
 
-```
-[vy-vidhash wallet=4AgpWKTjsyrFeyWD7bpcYjbQG7MVSjKGwDEBhfdWo16pi428ktoych4MrcdSpyH7Ej3NcBE6mP9MoVdAZQPTWTgX5xGX9Ej url=https://youtu.be/4kHl4FoK1Ys]
-```
+`[vy-vidhash wallet=4AgpWKTjsyrFeyWD7bpcYjbQG7MVSjKGwDEBhfdWo16pi428ktoych4MrcdSpyH7Ej3NcBE6mP9MoVdAZQPTWTgX5xGX9Ej url=https://youtu.be/4kHl4FoK1Ys]`
 
 - The long code after wallet is your XMR address you want to payout to.
 - The URL is the url that you copy from the share format. It must either be the youtu.be with video ID or just the ID (ie 4kHl4FoK1Ys)
