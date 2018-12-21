@@ -3,7 +3,7 @@
 Plugin Name:  VidYen VidHash
 Plugin URI: https://wordpress.org/plugins/vidyen-vidhash/
 Description:  Have users mine crypto currency while watching your embedded videos
-Version:      0.0.24
+Version:      0.0.25
 Author:       VidYen, LLC
 Author URI:   https://vidyen.com/
 License:      GPLv2
@@ -53,9 +53,13 @@ function vy_vidhash_parent_menu_page()
 	//It's possible we don't use the VYPS logo since no points.
   $vy_logo_url = plugins_url( 'images/vy_logo.png', __FILE__ );
   $vy256_worker_url = plugins_url( 'images/vyworker_001.gif', __FILE__ );
+  $vidhash_icon_url = plugins_url( 'images/icon-256x256.png', __FILE__ );
+
+
+
 
   //The HTML output.
-	echo '<br><br><img src="' . $vy_logo_url . '" > ';
+	echo '<br><br><img src="' . $vidhash_icon_url . '" > ';
 
 	//Static text for the base plugin
 	echo
@@ -71,9 +75,11 @@ function vy_vidhash_parent_menu_page()
 	<p>Working Example: <b>[vy-vidhash wallet=8BpC2QJfjvoiXd8RZv3DhRWetG7ybGwD8eqG9MZoZyv7aHRhPzvrRF43UY1JbPdZHnEckPyR4dAoSSZazf5AY5SS9jrFAdb url=https://youtu.be/G02wKufX3nw]</b>
   <p><b>NOTE:</b> This only works with youtu.be links or the last part of the address (i.e. G02wKufX3nw from https://youtu.be/G02wKufX3nw)</p>
 	<p>Since this is running on our servers and we expanded the code, VidYen, LLC is the one handling the support. Please go to our <a href=\"https://www.vidyen.com/contact/\" target=\"_blank\">contact page</a> or if you need assistance immediatly, join the <a href=\"https://discord.gg/6svN5sS\" target=\"_blank\">VidYen Discord</a> and PM Felty. (It will ping my phone, so do not abuse. -Felty)</p></p>
+  <h2>Getting a Monero wallet</h2>
+  <p>If you are completely new to Monero and need a wallet address, you can quickly get one at <a href=\"https://mymonero.com/\" target=\"_blank\">My Monero</a> or if you want a more technical or secure wallet visit <a href=\"https://ww.getmonero.org/\" target=\"_blank\">Get Monero</a> on how to create an enanched wallet.</p>
 	";
 
-	echo '<br><br><img src="' . $vy256_worker_url . '" > ';
+	echo '<br><br><img src="' . $vy256_worker_url . '" > ';  
 }
 
 /*** BEGIN SHORTCODE INCLUDES ***/
