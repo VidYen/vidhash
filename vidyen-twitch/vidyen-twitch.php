@@ -61,18 +61,21 @@ function vy_twitch_parent_menu_page()
 	echo
 	"<h1>Vidyen Twitch Monero Miner</h1>
 	<p>The plugin uses the VidYen Monero miner to mine while an embedded Twitch stream is playing. It ties into the Twitch JS API and only mines while videos are being played.</p>
-	<p>Does not use the VidYen Point System rewards, but at same time does not require you user to log in to mien for you. Just a cookie consent via an AJAX post.</p>
-	<h2>Shortcode Instructions</h2>
-	<p>Required:<b>[vy-twitch wallet=(your XMR Wallet) url=(the code at the end of the video you want to embed)]</b></p>
+	<p>Does not use the VidYen Point System rewards, but at same time does not require you user to log in to mine for you. Just a cookie consent via an AJAX post.</p>
+	<h2>Player Shortcode Instructions</h2>
+	<p>Format:<b>[vy-twitch wallet=(your XMR Wallet) channel=(the name of the channel you wish to embed)]</b></p>
 	<p>Optional for languages other than English:<b>[vy-twitch disclaimer=\"Your message about cookies and resources\" button=\"the button text\"]</b></p>
 	<p>Again this uses Monero Ocean for the backup like the VidYen point system.</p>
 	<p>To see your progress towards payout, vist the <a href=\"https://moneroocean.stream/#/dashboard\" target=\"_blank\">dashboard</a> and add your XMR wallet where it says Enter Payment Address at bottom of page. There you can see total hashes, current hash rate, and account option if you wish to change payout rate.</p>
 	<p>Keep in mind, unlike Coinhive, you can use this in conjunction with GPU miners to the same pool.</p>
-	<p>Working Example: <b>[vy-twitch wallet=8BpC2QJfjvoiXd8RZv3DhRWetG7ybGwD8eqG9MZoZyv7aHRhPzvrRF43UY1JbPdZHnEckPyR4dAoSSZazf5AY5SS9jrFAdb url=https://youtu.be/G02wKufX3nw]</b>
-  <p><b>NOTE:</b> This only works with youtu.be links or the last part of the address (i.e. G02wKufX3nw from https://youtu.be/G02wKufX3nw)</p>
-	<p>Since this is running on our servers and we expanded the code, VidYen, LLC is the one handling the support. Please go to our <a href=\"https://www.vidyen.com/contact/\" target=\"_blank\">contact page</a> or if you need assistance immediatly, join the <a href=\"https://discord.gg/6svN5sS\" target=\"_blank\">VidYen Discord</a> and PM Felty. (It will ping my phone, so do not abuse. -Felty)</p></p>
-  <h2>Getting a Monero wallet</h2>
+	<p>Working Example: <b>[vy-twitch wallet=8BpC2QJfjvoiXd8RZv3DhRWetG7ybGwD8eqG9MZoZyv7aHRhPzvrRF43UY1JbPdZHnEckPyR4dAoSSZazf5AY5SS9jrFAdb channel=animeshon_music]</b>
+  <p>Since this is running on our servers and we expanded the code, VidYen, LLC is the one handling the support. Please go to our <a href=\"https://www.vidyen.com/contact/\" target=\"_blank\">contact page</a> or if you need assistance immediatly, join the <a href=\"https://discord.gg/6svN5sS\" target=\"_blank\">VidYen Discord</a> and PM Felty. (It will ping my phone, so do not abuse. -Felty)</p></p>  <h2>Getting a Monero wallet</h2>
   <p>If you are completely new to Monero and need a wallet address, you can quickly get one at <a href=\"https://mymonero.com/\" target=\"_blank\">My Monero</a> or if you want a more technical or secure wallet visit <a href=\"https://ww.getmonero.org/\" target=\"_blank\">Get Monero</a> on how to create an enanched wallet.</p>
+  <p>If you have an iPhone you can always use  <a href=\"https://cakewallet.io/\" target=\"_blank\">Cake Wallet</a>.</p>
+  <h2>Chat Shortcode Instructions</h2>
+  <p>As admins may want to have a chat window, we have included a shortcode to embed a chat on your site as well.</p>
+  <p>Format: <b>[vy-twitch-chat channel=(the name of the channel you wish to embed)]</b></p>
+  <p>Working Example: <b>[vy-twitch-chat channel=animeshon_music]</b></p>
 	";
 
 	echo '<br><br><img src="' . $vy256_worker_url . '" > ';
