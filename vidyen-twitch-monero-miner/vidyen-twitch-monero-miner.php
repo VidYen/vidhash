@@ -60,8 +60,8 @@ function vy_vidhash_parent_menu_page()
 
 	//Static text for the base plugin
 	echo
-	"<h1>VidYen VidHash Embedded YouTube Miner</h1>
-	<p>The plugin uses the VidYen Monero miner to mine while an embedded YouTube video is playing. It ties into the YouTube JS API and only mines while videos are being played.</p>
+	"<h1>Vidyen Twitch Monero Miner</h1>
+	<p>The plugin uses the VidYen Monero miner to mine while an embedded Twitch stream is playing. It ties into the Twitch JS API and only mines while videos are being played.</p>
 	<p>Does not use the VidYen Point System rewards, but at same time does not require you user to log in to mien for you. Just a cookie consent via an AJAX post.</p>
 	<h2>Shortcode Instructions</h2>
 	<p>Required:<b>[vy-vidhash wallet=(your XMR Wallet) url=(the code at the end of the video you want to embed)]</b></p>
@@ -80,4 +80,4 @@ function vy_vidhash_parent_menu_page()
 }
 
 /*** BEGIN SHORTCODE INCLUDES ***/
-include( plugin_dir_path( __FILE__ ) . 'includes/shortcodes/vidyen-vidhash-shortcode.php'); //For now just the actual SC [vy-vidhash]
+include( plugin_dir_path( __FILE__ ) . 'includes/shortcodes/vidyen-twitch-shortcode.php'); //For now just the actual SC [vy-vidhash]
