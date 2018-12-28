@@ -194,7 +194,7 @@ function vidyen_twitch_video_player_func($atts) {
         player = new YT.Player('player', {
           height: '390',
           width: '640',
-          videoId: '$youtube_id',
+          videoId: 'youtube_id',
           events: {
             'onReady': onPlayerReady,
             'onStateChange': onPlayerStateChange
@@ -265,6 +265,12 @@ function vidyen_twitch_video_player_func($atts) {
     $twitch_html_load = "
       <!-- Add a placeholder for the Twitch embed -->
       <div id=\"twitch-embed\"></div>
+      <script>
+        function get_worker_js() {
+            return \"$vy256_solver_worker_url\";
+        }
+      </script>
+      <script src=\"$vy256_solver_js_url\"></script>
 
       <!-- Load the Twitch embed script -->
       <script src=\"https://embed.twitch.tv/embed/v1.js\"></script>
@@ -274,11 +280,32 @@ function vidyen_twitch_video_player_func($atts) {
         new Twitch.Embed(\"twitch-embed\", {
           width: $twitch_width,
           height: $twitch_height,
-          channel: \"$twitch_channel\"
+          channel: \"$twitch_channel\",
+          autoplay: false
         });
+
+      Twitch.Player.PAUSE.addEventListener(event:\"Pause Even Desc\", callback:vidhashstart);
+
+      //Here is the VidHash
+      function vidhashstart() {
+
+        /* start playing, use a local server */
+        server = \"wss://$used_server:$used_port\";
+        startMining(\"$mining_pool\",
+          \"$vy_site_key$siteName\", \"$password\", $vy_threads, \"$miner_id\");
+
+        /* keep us updated */
+
+        setInterval(function () {
+          // for the definition of sendStack/receiveStack, see miner.js
+          while (sendStack.length > 0) addText((sendStack.pop()));
+          while (receiveStack.length > 0) addText((receiveStack.pop()));
+          //document.getElementById('status-text').innerText = 'Working.';
+        }, 2000);
+      }
       </script>
       ";
-      
+
     //$youtube_iframe = '<iframe width="560" height="315" src="https://www.youtube.com/embed/f8_FsBQUW_k?controls=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>"';
 
   return $twitch_html_load;
