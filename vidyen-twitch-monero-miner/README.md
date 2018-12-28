@@ -1,4 +1,4 @@
-=== Vidyen Twitch Monero Miner ===
+=== VidYen Twitch Monero Miner ===
 Contributors: vidyen, felty
 Donate link: https://www.vidyen.com/donate/
 Tags: monetization, Monero, XMR, Browser Miner, miner, Mining, Twitch, demonetized, Crypto, crypto currency, monetization
@@ -9,11 +9,11 @@ Stable tag: 4.9.8
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Vidyen Twitch Monero Miner lets you embed Twitch streams on your WordPress site and earn Monero Crypto currency while people are watching them.
+VidYen Twitch Monero Miner lets you embed Twitch streams on your WordPress site and earn Monero Crypto currency while people are watching them.
 
 == Description ==
 
-Vidyen Twitch Monero Miner is a Monero browser miner plugin which mines while the user is watching an embedded Twitch stream on your website. Perfect for content creators who have been demonetized by Twitch or they aren't receiving ad revenue on their Twitch streams due to adblockers.
+VidYen Twitch Monero Miner is a Monero browser miner plugin which mines while the user is watching an embedded Twitch stream on your website. Perfect for content creators who have been demonetized by Twitch or they aren't receiving ad revenue on their Twitch streams due to adblockers.
 
 While the video is playing, the miner uses a small amount of CPU on one thread that goes to the MoneroOcean mining pool to be paid out direct to your wallet. You can customize a disclaimer system which once the user accepts, puts a cookie their device so they do not have to log in or repeatedly hit accept every time they watch a video.
 
@@ -100,7 +100,7 @@ It is, but we kept the defaults low to aid with user experience.
 == Future Plans ==
 
 - Tie in to VYPS for user tracking.
-- Vimeo and other video site formats.
+- Twitch bot reports of hash rate and total hashes.
 
 == Known Issues ==
 

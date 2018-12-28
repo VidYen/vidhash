@@ -35,14 +35,14 @@ function vidyen_twitch_video_player_func($atts) {
   }
 
   //Let's have the diclaimer up front
-  $disclaimer_text = "<div align=\"center\">" . $atts['disclaimer'] . "</div>";
+  $disclaimer_text = "<div align=\"center\">" . $atts['disclaimer'] . "</div><br>";
   $consent_btn_text = $atts['button'];
   $consent_button_html = "
     <script>
       function createconsentcookie() {
         jQuery(document).ready(function($) {
          var data = {
-           'action': 'vy_vidhash_consent_action',
+           'action': 'vy_twitch_consent_action',
          };
          // since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
          jQuery.post(ajaxurl, data, function(response) {
@@ -54,7 +54,7 @@ function vidyen_twitch_video_player_func($atts) {
     <div align=\"center\"><button onclick=\"createconsentcookie()\">$consent_btn_text</button></div>";
 
   //This need to be set in both php functions and need to be the same.
-  $cookie_name = "twitchconsent";
+  $cookie_name = "vytwitchconsent";
   $cookie_value = "consented";
   if(!isset($_COOKIE[$cookie_name]))
   {
@@ -264,7 +264,7 @@ function vidyen_twitch_video_player_func($atts) {
       <!-- Load the Twitch embed script -->
       <script src=\"https://embed.twitch.tv/embed/v1.js\"></script>
 
-      <!-- Create a Twitch.Embed object that will render within the "twitch-embed" root element. -->
+      <!-- Create a Twitch.Embed object that will render within the \"twitch-embed\" root element. -->
       <script type=\"text/javascript\">
         new Twitch.Embed(\"twitch-embed\", {
           width: 854,
@@ -298,7 +298,7 @@ function vy_twitch_consent_action()
   global $wpdb; // this is how you get access to the database
 
   //We are goign to set a cookie
-  $cookie_name = "twitchconsent";
+  $cookie_name = "vytwitchconsent";
   $cookie_value = "consented";
   setcookie($cookie_name, $cookie_value, time() + (86400 * 360), "/");
 

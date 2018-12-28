@@ -1,6 +1,6 @@
 <?php
  /*
-Plugin Name:  Vidyen Twitch Monero Miner
+Plugin Name:  VidYen Twitch Monero Miner
 Description:  Have users mine Monero crypto currency while watching your Twitch stream
 Version:      1.0.0
 Author:       VidYen, LLC
@@ -38,8 +38,8 @@ add_action('admin_menu', 'vy_twitch_menu');
 function vy_twitch_menu()
 {
 	//Only need to install the one menu to explain shortcode usage
-  $parent_page_title = "VidYen twitch";
-  $parent_menu_title = 'VY twitch';
+  $parent_page_title = "VidYen Twitch";
+  $parent_menu_title = 'VY Twitch';
   $capability = 'manage_options';
   $parent_menu_slug = 'vy_twitch';
   $parent_function = 'vy_twitch_parent_menu_page';
