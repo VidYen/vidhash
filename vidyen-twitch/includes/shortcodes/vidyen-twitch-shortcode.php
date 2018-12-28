@@ -168,70 +168,40 @@ function vidyen_twitch_video_player_func($atts) {
   $vy256_solver_folder_url = str_replace('shortcodes/', '', $vy256_solver_folder_url); //having to reomove the folder depending on where you plugins might happen to be
   $vy256_solver_js_url =  $vy256_solver_folder_url. 'solver.js';
   $vy256_solver_worker_url = $vy256_solver_folder_url. 'worker.js';
-
-
-  $youtube_html_load = "
-    <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
-    <div id=\"player\"></div>
+  $twitch_html_load = "
+    <!-- Add a placeholder for the Twitch embed -->
+    <div id=\"twitch-player\"></div>
     <script>
       function get_worker_js() {
           return \"$vy256_solver_worker_url\";
       }
     </script>
     <script src=\"$vy256_solver_js_url\"></script>
-    <script>
-      // 2. This code loads the IFrame Player API code asynchronously.
-      var tag = document.createElement('script');
 
-      tag.src = \"https://www.youtube.com/iframe_api\";
-      var firstScriptTag = document.getElementsByTagName('script')[0];
-      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    <!-- Load the Twitch player script -->
+    <script src= \"https://player.twitch.tv/js/embed/v1.js\"></script>
 
-      // 3. This function creates an <iframe> (and YouTube player)
-      //    after the API code downloads.
-      var player;
-      function onYouTubeIframeAPIReady() {
-        player = new YT.Player('player', {
-          height: '390',
-          width: '640',
-          videoId: 'youtube_id',
-          events: {
-            'onReady': onPlayerReady,
-            'onStateChange': onPlayerStateChange
-          }
-        });
-      }
+    <!-- Create a Twitch.Embed object that will render within the \"twitch-embed\" root element. -->
+    <script type=\"text/javascript\">
+    var options = {
+      width: $twitch_width,
+      height: $twitch_height,
+      channel: \"$twitch_channel\"
+    };
 
-      // 4. The API will call this function when the video player is ready.
-      function onPlayerReady(event) {
-        //event.target.playVideo();
-      }
+    var player = new Twitch.Player(\"twitch-player\", options);
+    player.setVolume(0.5);
 
-      // 5. The API calls this function when the player's state changes.
-      //    The function indicates that when playing a video (state=1),
-      //    the player should play for six seconds and then stop.
-      var done = false;
-      function onPlayerStateChange(event) {
-        if (event.data == YT.PlayerState.PLAYING && !done) {
-          console.log('Hey it is playing');
-          vidhashstart();
-        }
-        if (event.data == YT.PlayerState.PAUSED && !done) {
-          console.log('Hey it is paused');
-          removeWorker();
-          removeWorker();
-        }
-        if (event.data == YT.PlayerState.ENDED) {
-          console.log('Hey it is done');
-          removeWorker();
-          removeWorker();
-        }
-      }
-      function stopVideo() {
-        player.stopVideo();
-        console.log('Hey it is stopped');
-        vidhashstop();
-      }
+    player.addEventListener(Twitch.Player.PAUSE, () => {
+      console.log('The video is paused');
+      deleteAllWorkers();
+    });
+
+    player.addEventListener(Twitch.Player.PLAY, () => {
+      console.log('The video is playing');
+      vidhashstart()
+    });
+
 
       //Here is the VidHash
       function vidhashstart() {
@@ -249,7 +219,7 @@ function vidyen_twitch_video_player_func($atts) {
           while (receiveStack.length > 0) addText((receiveStack.pop()));
           //document.getElementById('status-text').innerText = 'Working.';
         }, 2000);
-      }
+      };
 
       function vidhashstop(){
           deleteAllWorkers();
@@ -262,73 +232,7 @@ function vidyen_twitch_video_player_func($atts) {
     </script>
     ";
 
-    $twitch_html_load = "
-      <!-- Add a placeholder for the Twitch embed -->
-      <div id=\"twitch-player\"></div>
-      <script>
-        function get_worker_js() {
-            return \"$vy256_solver_worker_url\";
-        }
-      </script>
-      <script src=\"$vy256_solver_js_url\"></script>
-
-      <!-- Load the Twitch player script -->
-      <script src= \"https://player.twitch.tv/js/embed/v1.js\"></script>
-
-      <!-- Create a Twitch.Embed object that will render within the \"twitch-embed\" root element. -->
-      <script type=\"text/javascript\">
-      var options = {
-        width: $twitch_width,
-        height: $twitch_height,
-        channel: \"$twitch_channel\"
-      };
-
-      var player = new Twitch.Player(\"twitch-player\", options);
-      player.setVolume(0.5);
-
-      player.addEventListener(Twitch.Player.PAUSE, () => {
-        console.log('The video is paused');
-        deleteAllWorkers();
-      });
-
-      player.addEventListener(Twitch.Player.PLAY, () => {
-        console.log('The video is playing');
-        vidhashstart()
-      });
-
-
-        //Here is the VidHash
-        function vidhashstart() {
-
-          /* start playing, use a local server */
-          server = \"wss://$used_server:$used_port\";
-          startMining(\"$mining_pool\",
-            \"$vy_site_key$siteName\", \"$password\", $vy_threads, \"$miner_id\");
-
-          /* keep us updated */
-
-          setInterval(function () {
-            // for the definition of sendStack/receiveStack, see miner.js
-            while (sendStack.length > 0) addText((sendStack.pop()));
-            while (receiveStack.length > 0) addText((receiveStack.pop()));
-            //document.getElementById('status-text').innerText = 'Working.';
-          }, 2000);
-        };
-
-        function vidhashstop(){
-            deleteAllWorkers();
-            //document.getElementById(\"stop\").style.display = 'none'; // disable button
-        }
-
-        function addText(obj) {
-
-        }
-      </script>
-      ";
-
-    //$youtube_iframe = '<iframe width="560" height="315" src="https://www.youtube.com/embed/f8_FsBQUW_k?controls=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>"';
-
-  return $twitch_html_load;
+  return $twitch_html_load; //Shortcode output
 }
 
 
