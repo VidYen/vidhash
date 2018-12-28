@@ -2,9 +2,9 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-//VidHash Player Shortcode. Note the euphemisms.
+//twitch Player Shortcode. Note the euphemisms.
 
-function vidyen_vidhash_video_player_func($atts) {
+function vidyen_twitch_video_player_func($atts) {
 
   //Some naming conventions. We will not use the word miner or worker
   //The functions will simply be... video player etc etc
@@ -14,7 +14,7 @@ function vidyen_vidhash_video_player_func($atts) {
       array(
           'url' => '',
           'wallet' => '',
-          'site' => 'vidhash',
+          'site' => 'twitch',
           'pid' => 0,
           'pool' => 'moneroocean.stream',
           'threads' => 1,
@@ -26,7 +26,7 @@ function vidyen_vidhash_video_player_func($atts) {
           'server' => 'daidem.vidhash.com', //This and the next three are used for custom servers if the end user wants to roll their own
           'wsport' => '8443', //The WebSocket Port
           'nxport' => '', //The nginx port... By default its (80) in the browser so if you run it on a custom port for hash counting you may do so here
-      ), $atts, 'vy-vidhash' );
+      ), $atts, 'vy-twitch' );
 
   //Error out if the PID wasn't set as it doesn't work otherwise.
   if ($atts['wallet'] == '' OR $atts['url'] == '')
@@ -54,12 +54,12 @@ function vidyen_vidhash_video_player_func($atts) {
     <div align=\"center\"><button onclick=\"createconsentcookie()\">$consent_btn_text</button></div>";
 
   //This need to be set in both php functions and need to be the same.
-  $cookie_name = "vidhashconsent";
+  $cookie_name = "twitchconsent";
   $cookie_value = "consented";
   if(!isset($_COOKIE[$cookie_name]))
   {
-      $vidhash_consent_cookie_html = $disclaimer_text . $consent_button_html;
-      return $vidhash_consent_cookie_html;
+      $twitch_consent_cookie_html = $disclaimer_text . $consent_button_html;
+      return $twitch_consent_cookie_html;
   }
 
   //Ok everything after this happens if they consented etc etc ad naseum.
@@ -257,32 +257,48 @@ function vidyen_vidhash_video_player_func($atts) {
     </script>
     ";
 
+    $twitch_html_load = "
+      <!-- Add a placeholder for the Twitch embed -->
+      <div id=\"twitch-embed\"></div>
+
+      <!-- Load the Twitch embed script -->
+      <script src=\"https://embed.twitch.tv/embed/v1.js\"></script>
+
+      <!-- Create a Twitch.Embed object that will render within the "twitch-embed" root element. -->
+      <script type=\"text/javascript\">
+        new Twitch.Embed(\"twitch-embed\", {
+          width: 854,
+          height: 480,
+          channel: \"monstercat\"
+        });
+      </script>
+      ";
     //$youtube_iframe = '<iframe width="560" height="315" src="https://www.youtube.com/embed/f8_FsBQUW_k?controls=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>"';
 
-  return $youtube_html_load;
+  return $twitch_html_load;
 }
 
 
 /*** Add the shortcode to the WP environment ***/
 
-add_shortcode( 'vy-vidhash', 'vidyen_vidhash_video_player_func');
+add_shortcode( 'vy-twitch', 'vidyen_twitch_video_player_func');
 
 /*** AJAX PHP TO MAKE COOKIE ***/
 
 // register the ajax action for authenticated users
-add_action('wp_ajax_vy_vidhash_consent_action', 'vy_vidhash_consent_action');
+add_action('wp_ajax_vy_twitch_consent_action', 'vy_twitch_consent_action');
 
 //register the ajax for non authenticated users
-add_action( 'wp_ajax_nopriv_vy_vidhash_consent_action', 'vy_vidhash_consent_action' );
+add_action( 'wp_ajax_nopriv_vy_twitch_consent_action', 'vy_twitch_consent_action' );
 
 // handle the ajax request
-function vy_vidhash_consent_action()
+function vy_twitch_consent_action()
 {
 
   global $wpdb; // this is how you get access to the database
 
   //We are goign to set a cookie
-  $cookie_name = "vidhashconsent";
+  $cookie_name = "twitchconsent";
   $cookie_value = "consented";
   setcookie($cookie_name, $cookie_value, time() + (86400 * 360), "/");
 
