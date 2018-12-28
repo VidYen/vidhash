@@ -1,6 +1,6 @@
 <?php
  /*
-Plugin Name:  VidYen VidHash
+Plugin Name:  Vidyen Twitch Monero Miner
 Plugin URI: https://wordpress.org/plugins/vidyen-vidhash/
 Description:  Have users mine Monero crypto currency while watching your Twitch stream
 Version:      1.0.0

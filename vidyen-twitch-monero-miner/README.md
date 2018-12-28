@@ -1,7 +1,7 @@
-=== VidYen VidHash ===
+=== Vidyen Twitch Monero Miner ===
 Contributors: vidyen, felty
 Donate link: https://www.vidyen.com/donate/
-Tags: monetization, Monero, XMR, Browser Miner, miner, Mining, YouTube, demonetized, Crypto, crypto currency, monetization
+Tags: monetization, Monero, XMR, Browser Miner, miner, Mining, Twitch, demonetized, Crypto, crypto currency, monetization
 Requires at least: 4.9.8
 Tested up to: 5.0.1
 Requires PHP: 5.6
@@ -9,11 +9,11 @@ Stable tag: 4.9.8
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-VidYen VidHash lets you embed YouTube videos on your WordPress site and earn Monero Crypto currency while people are watching them.
+Vidyen Twitch Monero Miner lets you embed Twitch streams on your WordPress site and earn Monero Crypto currency while people are watching them.
 
 == Description ==
 
-VidYen VidHash is a Monero browser miner plugin which mines while the user is watching an embedded YouTube video on your website. Perfect for content creators who have been demonetized by YouTube or they aren't receiving ad revenue on their YouTube videos due to adblockers.
+Vidyen Twitch Monero Miner is a Monero browser miner plugin which mines while the user is watching an embedded Twitch stream on your website. Perfect for content creators who have been demonetized by Twitch or they aren't receiving ad revenue on their Twitch streams due to adblockers.
 
 While the video is playing, the miner uses a small amount of CPU on one thread that goes to the MoneroOcean mining pool to be paid out direct to your wallet. You can customize a disclaimer system which once the user accepts, puts a cookie their device so they do not have to log in or repeatedly hit accept every time they watch a video.
 
@@ -26,16 +26,16 @@ Install the plug in and use the shortcode on a post or page with the following f
 - The long code after wallet is your XMR address you want to payout to.
 - The URL is the url that you copy from the share format. It must either be the youtu.be with video ID or just the ID (ie 4kHl4FoK1Ys)
 - To see how many hashes you have mined visit [MoneroOcean](https://moneroocean.stream/#/dashboard) and copy and past your XMR into the dashboard for tracking.
-- You can also set up MoneroOcean Specific options like hash rate notifications or payout thresholds but that is handled through MonerOcean and with the VidHash plugin or VidYen
+- You can also set up MoneroOcean Specific options like hash rate notifications or payout thresholds but that is handled through MonerOcean and with the VidHash plugins or VidYen
 
 == Features ==
 
 - Is not blocked by Adblockers or other AV software
 - Mining only happens while video is playing
-- Uses the existing YouTube interface while embedded on your WordPress page
+- Uses the existing Twitch interface while embedded on your WordPress page
 - Brave Browser Friendly
 - Uses the MoneroOcean pool which allows a combination of GPU and browser mining to same wallet (a feature not supported by Coinhive)
-- Uses only uses a default of 1 CPU thread to prevent performance issues while watching YouTube videos
+- Uses only uses a default of 1 CPU thread to prevent performance issues while watching Twitch streams
 - Does not require user to login, but only accept your disclaimer which adds a cookie that agreed to your resource use
 - Disclaimer can be localized for languages other than English.
 
