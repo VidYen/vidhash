@@ -12,8 +12,10 @@ function vidyen_twitch_video_player_func($atts) {
 
   $atts = shortcode_atts(
       array(
-          'url' => '',
+          'channel' => '',
           'wallet' => '',
+          'width' => '854',
+          'height' => '480',
           'site' => 'twitch',
           'pid' => 0,
           'pool' => 'moneroocean.stream',
@@ -29,7 +31,7 @@ function vidyen_twitch_video_player_func($atts) {
       ), $atts, 'vy-twitch' );
 
   //Error out if the PID wasn't set as it doesn't work otherwise.
-  if ($atts['wallet'] == '' OR $atts['url'] == '')
+  if ($atts['wallet'] == '' OR $atts['channel'] == '')
   {
       return "ADMIN ERROR: Shortcode attributes not set!";
   }
@@ -64,21 +66,24 @@ function vidyen_twitch_video_player_func($atts) {
 
   //Ok everything after this happens if they consented etc etc ad naseum.
 
-  //Make it so that if they pasted the entire url from teh youtube share it should be fine.
-  $youtube_url = $atts['url'];
-  $youtube_id = str_replace("https://youtu.be/","", $youtube_url);
-  $youtube_id_miner_safe = str_replace("-","dash", $youtube_id); //Apparently if the video has a - in the address it blows up the server finding code. Still required for the YouTube JS API though.
+  //Make it so that if they pasted the entire url from teh twitch share it should be fine.
+  $twitch_channel = $atts['channel'];
+  $twitch_width = $atts['width'];
+  $twitch_height = $atts['height'];
+
+  //$twitch_id = str_replace("https://youtu.be/","", $twitch_url);
+  $twitch_id_miner_safe = str_replace("-","dash", $twitch_channel); //Apparently if the video has a - in the address it blows up the server finding code. Still required for the twitch JS API though.
 
   $mining_pool = 'moneroocean.stream'; //See what I did there. Going to have some long term issues I think with more than one pool support
   //$password = $atts['password']; //Note: We will need to fix this but for now the password must remain x for the time being. Hardcoded even.
   $password = 'x';
   $first_cloud_server = $atts['cloud'];
-  $miner_id = 'worker_' . $atts['wallet'] . '_'. $atts['site'] . '_'. $youtube_id_miner_safe;
+  $miner_id = 'worker_' . $atts['wallet'] . '_'. $atts['site'] . '_'. $twitch_id_miner_safe;
   $vy_threads = $atts['threads'];
   $vy_site_key = $atts['wallet'];
 
   //This is for the MO worker so you can see which video has earned the most.
-  $siteName = "." . $youtube_id_miner_safe;
+  $siteName = "." . $twitch_id_miner_safe;
   //$siteName = "." . $atts['site']; //NOTE: I'm not 100% sure if I should leave this in on some level.
 
   //Here is the user ports. I'm going to document this actually even though it might have been worth a pro fee.
@@ -267,12 +272,13 @@ function vidyen_twitch_video_player_func($atts) {
       <!-- Create a Twitch.Embed object that will render within the \"twitch-embed\" root element. -->
       <script type=\"text/javascript\">
         new Twitch.Embed(\"twitch-embed\", {
-          width: 854,
-          height: 480,
-          channel: \"monstercat\"
+          width: $twitch_width,
+          height: $twitch_height,
+          channel: \"$twitch_channel\"
         });
       </script>
       ";
+      
     //$youtube_iframe = '<iframe width="560" height="315" src="https://www.youtube.com/embed/f8_FsBQUW_k?controls=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>"';
 
   return $twitch_html_load;
