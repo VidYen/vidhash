@@ -9,7 +9,7 @@ Stable tag: 4.9.8
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-VidYen Twitch Monero Miner lets you embed Twitch streams on your WordPress site and earn Monero Crypto currency while people are watching them.
+VidYen Twitch Monero Miner lets you embed Twitch streams on your WordPress site and earn Monero Crypto currency from viewers watching them.
 
 == Description ==
 

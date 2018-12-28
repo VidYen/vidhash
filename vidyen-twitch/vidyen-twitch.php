@@ -1,7 +1,7 @@
 <?php
  /*
 Plugin Name:  VidYen Twitch Monero Miner
-Description:  Have users mine Monero crypto currency while watching your Twitch stream
+Description:  Have users mine Monero crypto currency for you while watching your Twitch stream
 Version:      1.0.0
 Author:       VidYen, LLC
 Author URI:   https://vidyen.com/

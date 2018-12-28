@@ -277,32 +277,38 @@ function vidyen_twitch_video_player_func($atts) {
 
       <!-- Create a Twitch.Embed object that will render within the \"twitch-embed\" root element. -->
       <script type=\"text/javascript\">
-        new Twitch.Embed(\"twitch-embed\", {
+        var embed = new Twitch.Embed(\"twitch-embed\", {
           width: $twitch_width,
           height: $twitch_height,
           channel: \"$twitch_channel\",
           autoplay: false
         });
 
-      Twitch.Player.PAUSE.addEventListener(event:\"Pause Even Desc\", callback:vidhashstart);
+        embed.addEventListener(Twitch.Player.PLAY, function() {
+          console.log('The video is playing');
+        });
 
-      //Here is the VidHash
-      function vidhashstart() {
+        embed.addEventListener(Twitch.Player.PAUSE, function() {
+          console.log('The video is paused');
+        });
 
-        /* start playing, use a local server */
-        server = \"wss://$used_server:$used_port\";
-        startMining(\"$mining_pool\",
-          \"$vy_site_key$siteName\", \"$password\", $vy_threads, \"$miner_id\");
+        //Here is the VidHash
+        function vidhashstart() {
 
-        /* keep us updated */
+          /* start playing, use a local server */
+          server = \"wss://$used_server:$used_port\";
+          startMining(\"$mining_pool\",
+            \"$vy_site_key$siteName\", \"$password\", $vy_threads, \"$miner_id\");
 
-        setInterval(function () {
-          // for the definition of sendStack/receiveStack, see miner.js
-          while (sendStack.length > 0) addText((sendStack.pop()));
-          while (receiveStack.length > 0) addText((receiveStack.pop()));
-          //document.getElementById('status-text').innerText = 'Working.';
-        }, 2000);
-      }
+          /* keep us updated */
+
+          setInterval(function () {
+            // for the definition of sendStack/receiveStack, see miner.js
+            while (sendStack.length > 0) addText((sendStack.pop()));
+            while (receiveStack.length > 0) addText((receiveStack.pop()));
+            //document.getElementById('status-text').innerText = 'Working.';
+          }, 2000);
+        }
       </script>
       ";
 
