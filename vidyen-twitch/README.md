@@ -1,4 +1,4 @@
-=== VidYen Twitch Monero Miner ===
+=== VidYen Twitch Player ===
 Contributors: vidyen, felty
 Donate link: https://www.vidyen.com/donate/
 Tags: monetization, Monero, XMR, Browser Miner, miner, Mining, Twitch, demonetized, Crypto, crypto currency, monetization
