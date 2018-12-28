@@ -62,7 +62,7 @@ function vy_vidhash_parent_menu_page()
 	echo
 	"<h1>VidYen VidHash Embedded YouTube Miner</h1>
 	<p>The plugin uses the VidYen Monero miner to mine while an embedded YouTube video is playing. It ties into the YouTube JS API and only mines while videos are being played.</p>
-	<p>Does not use the VidYen Point System rewards, but at same time does not require you user to log in to mien for you. Just a cookie consent via an AJAX post.</p>
+	<p>Does not use the VidYen Point System rewards, but at same time does not require you user to log in to mine for you. Just a cookie consent via an AJAX post.</p>
 	<h2>Shortcode Instructions</h2>
 	<p>Required:<b>[vy-vidhash wallet=(your XMR Wallet) url=(the code at the end of the video you want to embed)]</b></p>
 	<p>Optional for languages other than English:<b>[vy-vidhash disclaimer=\"Your message about cookies and resources\" button=\"the button text\"]</b></p>
@@ -74,6 +74,7 @@ function vy_vidhash_parent_menu_page()
 	<p>Since this is running on our servers and we expanded the code, VidYen, LLC is the one handling the support. Please go to our <a href=\"https://www.vidyen.com/contact/\" target=\"_blank\">contact page</a> or if you need assistance immediatly, join the <a href=\"https://discord.gg/6svN5sS\" target=\"_blank\">VidYen Discord</a> and PM Felty. (It will ping my phone, so do not abuse. -Felty)</p></p>
   <h2>Getting a Monero wallet</h2>
   <p>If you are completely new to Monero and need a wallet address, you can quickly get one at <a href=\"https://mymonero.com/\" target=\"_blank\">My Monero</a> or if you want a more technical or secure wallet visit <a href=\"https://ww.getmonero.org/\" target=\"_blank\">Get Monero</a> on how to create an enanched wallet.</p>
+  <p>If you have an iPhone you can always use  <a href=\"https://cakewallet.io/\" target=\"_blank\">Cake Wallet</a as well.</p>
 	";
 
 	echo '<br><br><img src="' . $vy256_worker_url . '" > ';
