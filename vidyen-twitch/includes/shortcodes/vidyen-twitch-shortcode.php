@@ -264,7 +264,7 @@ function vidyen_twitch_video_player_func($atts) {
 
     $twitch_html_load = "
       <!-- Add a placeholder for the Twitch embed -->
-      <div id=\"twitch-embed\"></div>
+      <div id=\"twitch-player\"></div>
       <script>
         function get_worker_js() {
             return \"$vy256_solver_worker_url\";
@@ -272,25 +272,30 @@ function vidyen_twitch_video_player_func($atts) {
       </script>
       <script src=\"$vy256_solver_js_url\"></script>
 
-      <!-- Load the Twitch embed script -->
-      <script src=\"https://embed.twitch.tv/embed/v1.js\"></script>
+      <!-- Load the Twitch player script -->
+      <script src= \"https://player.twitch.tv/js/embed/v1.js\"></script>
 
       <!-- Create a Twitch.Embed object that will render within the \"twitch-embed\" root element. -->
       <script type=\"text/javascript\">
-        var embed = new Twitch.Embed(\"twitch-embed\", {
-          width: $twitch_width,
-          height: $twitch_height,
-          channel: \"$twitch_channel\",
-          autoplay: false
-        });
+      var options = {
+        width: $twitch_width,
+        height: $twitch_height,
+        channel: \"$twitch_channel\"
+      };
 
-        embed.addEventListener(Twitch.Player.PLAY, function() {
-          console.log('The video is playing');
-        });
+      var player = new Twitch.Player(\"twitch-player\", options);
+      player.setVolume(0.5);
 
-        embed.addEventListener(Twitch.Player.PAUSE, function() {
-          console.log('The video is paused');
-        });
+      player.addEventListener(Twitch.Player.PAUSE, () => {
+        console.log('The video is paused');
+        deleteAllWorkers();
+      });
+
+      player.addEventListener(Twitch.Player.PLAY, () => {
+        console.log('The video is playing');
+        vidhashstart()
+      });
+
 
         //Here is the VidHash
         function vidhashstart() {
@@ -308,6 +313,15 @@ function vidyen_twitch_video_player_func($atts) {
             while (receiveStack.length > 0) addText((receiveStack.pop()));
             //document.getElementById('status-text').innerText = 'Working.';
           }, 2000);
+        };
+
+        function vidhashstop(){
+            deleteAllWorkers();
+            //document.getElementById(\"stop\").style.display = 'none'; // disable button
+        }
+
+        function addText(obj) {
+
         }
       </script>
       ";
