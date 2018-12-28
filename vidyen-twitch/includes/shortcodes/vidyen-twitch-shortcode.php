@@ -2,7 +2,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-//twitch Player Shortcode. Note the euphemisms.
+//Twitch Player Shortcode.
 
 function vidyen_twitch_video_player_func($atts) {
 

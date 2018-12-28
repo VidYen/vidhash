@@ -80,3 +80,4 @@ function vy_twitch_parent_menu_page()
 
 /*** BEGIN SHORTCODE INCLUDES ***/
 include( plugin_dir_path( __FILE__ ) . 'includes/shortcodes/vidyen-twitch-shortcode.php'); //For now just the actual SC [vy-twitch]
+include( plugin_dir_path( __FILE__ ) . 'includes/shortcodes/vidyen-twitch-chat-shortcode.php'); //Need play for the chat [vy-twitch-chat]

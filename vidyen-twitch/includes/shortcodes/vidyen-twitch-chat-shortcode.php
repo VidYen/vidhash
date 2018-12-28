@@ -2,7 +2,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-//twitch Player Shortcode. Note the euphemisms.
+//twitch chat Shortcode.
 
 function vidyen_twitch_chat_func($atts) {
 
@@ -16,8 +16,8 @@ function vidyen_twitch_chat_func($atts) {
           'wallet' => '',
           'width' => '854',
           'height' => '480',
-          'site' => 'twitch',          
-      ), $atts, 'vy-twitch' );
+          'site' => 'twitch',
+      ), $atts, 'vy-twitch-chat' );
 
   //Error out if the PID wasn't set as it doesn't work otherwise.
   if ($atts['channel'] == '')
@@ -42,7 +42,6 @@ function vidyen_twitch_chat_func($atts) {
 
   return $twitch_chat_html_load; //Shortcode output
 }
-
 
 /*** Add the shortcode to the WP environment ***/
 
