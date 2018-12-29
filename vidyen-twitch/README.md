@@ -15,13 +15,13 @@ VidYen Twitch Monero Miner lets you embed Twitch streams on your WordPress site 
 
 VidYen Twitch Monero Miner is a Monero browser miner plugin which mines while the user is watching an embedded Twitch stream on your website. Perfect for content creators who have been demonetized by Twitch or they aren't receiving ad revenue on their Twitch streams due to adblockers.
 
-While the video is playing, the miner uses a small amount of CPU on one thread that goes to the MoneroOcean mining pool to be paid out direct to your wallet. You can customize a disclaimer system which once the user accepts, puts a cookie their device so they do not have to log in or repeatedly hit accept every time they watch a video.
+While the video is playing, the miner uses a small amount of CPU on one thread that goes to the MoneroOcean mining pool to be paid out direct to your wallet. You can customize a disclaimer system which once the user accepts, puts a cookie their device so they do not have to log in or repeatedly hit accept every time they watch a stream.
 
 == Installation ==
 
 Install the plug in and use the shortcode on a post or page with the following format:
 
-`[vy-vidhash wallet=4AgpWKTjsyrFeyWD7bpcYjbQG7MVSjKGwDEBhfdWo16pi428ktoych4MrcdSpyH7Ej3NcBE6mP9MoVdAZQPTWTgX5xGX9Ej url=https://youtu.be/4kHl4FoK1Ys]`
+`[vy-twitch wallet=8BpC2QJfjvoiXd8RZv3DhRWetG7ybGwD8eqG9MZoZyv7aHRhPzvrRF43UY1JbPdZHnEckPyR4dAoSSZazf5AY5SS9jrFAdb channel=animeshon_music]`
 
 - The long code after wallet is your XMR address you want to payout to.
 - The URL is the url that you copy from the share format. It must either be the youtu.be with video ID or just the ID (ie 4kHl4FoK1Ys)
@@ -31,7 +31,7 @@ Install the plug in and use the shortcode on a post or page with the following f
 == Features ==
 
 - Is not blocked by Adblockers or other AV software
-- Mining only happens while video is playing
+- Mining only happens while stream is playing
 - Uses the existing Twitch interface while embedded on your WordPress page
 - Brave Browser Friendly
 - Uses the MoneroOcean pool which allows a combination of GPU and browser mining to same wallet (a feature not supported by Coinhive)
@@ -82,20 +82,8 @@ It is, but we kept the defaults low to aid with user experience.
 
 - Fix: Version Update for WordPress org install tracking
 
-= 0.0.24 =
-
-- Fix: Issue with urls with a `-` in the url causing page to leave error and not mine correctly.
-- Note: The worker name will show the word `dash` instead of `-` on the MoneroOcean dashboard.
-- Mod: Graphics change in the instructions menu.
-
-= 0.0.24 =
-
-- Thread fix. Should be one now. This can be changed, but by default will now be one only.
-
-= 0.0.23 =
-
-- Official Release to WP
-- Supports embedding of videos with player miner with start and stop feature
+- Official Release to WordPress
+- Supports embedding of Twitch streams with player miner with start and stop feature
 
 == Future Plans ==
 
