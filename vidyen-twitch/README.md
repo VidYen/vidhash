@@ -30,7 +30,7 @@ Install the plug in and use the shortcode on a post or page with the following f
 
 == Features ==
 
-- Is not blocked by Adblockers or other AV software
+- Is not blocked by Adblockers or other Anti Virus software
 - Mining only happens while stream is playing
 - Uses the existing Twitch interface while embedded on your WordPress page
 - Brave Browser Friendly
@@ -43,13 +43,13 @@ Install the plug in and use the shortcode on a post or page with the following f
 
 =What are the fees involved?=
 
-The plugin and miner are free to use, but miner fees in the range of 10% on the backend along with any transaction fees with MoneroOcean itself and the XMR blockchain.
+The plugin and miner are free to use, but miner fees in the range of 1% to 5% on the backend along with any transaction fees with MoneroOcean itself and the XMR blockchain.
 
 =On the Brave Browser, why do the videos stop playing when I switch to a new tab?=
 
 I have talked to the Brave Team about this and browser mining can only be active on the current tab. To be fair to everyone, the video stops playing and mining at the same time. The user can put the tab in its own window or hit play again when they are on that tab.
 
-=Can I use my own backend server rather than VidHash one's?=
+=Can I use my own backend server rather than the VidYen one's?=
 
 Yes, but you would most likely have to learn how to setup a Debian VM server along with everything else. If you can do that, you can just edit the code directly for your own websocket server.
 
@@ -80,16 +80,16 @@ It is, but we kept the defaults low to aid with user experience.
 
 = 1.0.0 =
 
-- Fix: Version Update for WordPress org install tracking
-
 - Official Release to WordPress
 - Supports embedding of Twitch streams with player miner with start and stop feature
 
 == Future Plans ==
 
+- System to track users by Twitch handle so you can show which watcher has mined the most
 - Tie in to VYPS for user tracking.
 - Twitch bot reports of hash rate and total hashes.
 
+
 == Known Issues ==
 
-- Multiple tabs do not work and prior must be closed.
+- Multiple tabs do not work and prior tab must be closed.
