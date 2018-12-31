@@ -43,7 +43,7 @@ Install the plug in and use the shortcode on a post or page with the following f
 
 =What are the fees involved?=
 
-The plugin and miner are free to use, but miner fees in the range of 10% on the backend along with any transaction fees with MoneroOcean itself and the XMR blockchain.
+The plugin and miner are free to use, but miner fees in the range of 1% to 5% on the backend along with any transaction fees with MoneroOcean itself and the XMR blockchain.
 
 =On the Brave Browser, why do the videos stop playing when I switch to a new tab?=
 
@@ -104,4 +104,4 @@ It is, but we kept the defaults low to aid with user experience.
 
 == Known Issues ==
 
-- Multiple tabs do not work and prior must be closed.
+- Multiple tabs do not work and prior tab must be closed.
