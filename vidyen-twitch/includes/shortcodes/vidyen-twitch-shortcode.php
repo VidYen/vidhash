@@ -186,7 +186,8 @@ function vidyen_twitch_video_player_func($atts) {
     var options = {
       width: $twitch_width,
       height: $twitch_height,
-      channel: \"$twitch_channel\"
+      channel: \"$twitch_channel\",
+      autoplay: false
     };
 
     var player = new Twitch.Player(\"twitch-player\", options);
