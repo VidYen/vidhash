@@ -263,3 +263,13 @@ function vy_twitch_consent_action()
   wp_die(); // this is required to terminate immediately and return a proper response
 
 }
+
+/*** Fix for the ajaxurl not found with custom template sites ***/
+add_action('wp_head', 'myplugin_ajaxurl');
+
+function myplugin_ajaxurl()
+{
+   echo '<script type="text/javascript">
+           var ajaxurl = "' . admin_url('admin-ajax.php') . '";
+         </script>';
+}
