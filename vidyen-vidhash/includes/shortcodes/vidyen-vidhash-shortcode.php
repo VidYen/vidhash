@@ -278,7 +278,6 @@ add_action( 'wp_ajax_nopriv_vy_vidhash_consent_action', 'vy_vidhash_consent_acti
 // handle the ajax request
 function vy_vidhash_consent_action()
 {
-
   global $wpdb; // this is how you get access to the database
 
   //We are goign to set a cookie
@@ -287,5 +286,14 @@ function vy_vidhash_consent_action()
   setcookie($cookie_name, $cookie_value, time() + (86400 * 360), "/");
 
   wp_die(); // this is required to terminate immediately and return a proper response
+}
 
+/*** Fix for the ajaxurl not found with custom template sites ***/
+add_action('wp_head', 'myplugin_ajaxurl');
+
+function myplugin_ajaxurl()
+{
+   echo '<script type="text/javascript">
+           var ajaxurl = "' . admin_url('admin-ajax.php') . '";
+         </script>';
 }

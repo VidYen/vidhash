@@ -252,7 +252,6 @@ add_action( 'wp_ajax_nopriv_vy_twitch_consent_action', 'vy_twitch_consent_action
 // handle the ajax request
 function vy_twitch_consent_action()
 {
-
   global $wpdb; // this is how you get access to the database
 
   //We are goign to set a cookie
@@ -261,7 +260,6 @@ function vy_twitch_consent_action()
   setcookie($cookie_name, $cookie_value, time() + (86400 * 360), "/");
 
   wp_die(); // this is required to terminate immediately and return a proper response
-
 }
 
 /*** Fix for the ajaxurl not found with custom template sites ***/
