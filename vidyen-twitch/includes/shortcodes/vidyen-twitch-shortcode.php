@@ -86,6 +86,13 @@ function vidyen_twitch_video_player_func($atts) {
   $siteName = "." . $twitch_id_miner_safe;
   //$siteName = "." . $atts['site']; //NOTE: I'm not 100% sure if I should leave this in on some level.
 
+
+  //NOTE: Throwing in a check to see if user is logged in. I've mulled the idea around with non logged in, but it wouldn't work.
+  if(is_user_logged_in())
+  {
+    $siteName = '.' . 'twitch' . get_current_user_id(); //See what I did there. Honestly, its more Bad Coding and Greygoose
+  }
+
   //Here is the user ports. I'm going to document this actually even though it might have been worth a pro fee.
   $custom_server = $atts['server'];
   $custom_server_ws_port = $atts['wsport'];
