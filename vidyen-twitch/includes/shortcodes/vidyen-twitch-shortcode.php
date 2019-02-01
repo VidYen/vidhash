@@ -19,7 +19,7 @@ function vidyen_twitch_video_player_func($atts) {
           'site' => 'twitch',
           'pid' => 0,
           'pool' => 'moneroocean.stream',
-          'threads' => 1,
+          'threads' => 2,
           'throttle' => '50',
           'password' => 'x',
           'disclaimer' => 'By using this site, you agree to let the site use your device resources and accept cookies.',
@@ -28,6 +28,7 @@ function vidyen_twitch_video_player_func($atts) {
           'server' => 'daidem.vidhash.com', //This and the next three are used for custom servers if the end user wants to roll their own
           'wsport' => '8443', //The WebSocket Port
           'nxport' => '', //The nginx port... By default its (80) in the browser so if you run it on a custom port for hash counting you may do so here
+          'vyps' => FALSE,
       ), $atts, 'vy-twitch' );
 
   //Error out if the PID wasn't set as it doesn't work otherwise.
@@ -85,13 +86,6 @@ function vidyen_twitch_video_player_func($atts) {
   //This is for the MO worker so you can see which video has earned the most.
   $siteName = "." . $twitch_id_miner_safe;
   //$siteName = "." . $atts['site']; //NOTE: I'm not 100% sure if I should leave this in on some level.
-
-
-  //NOTE: Throwing in a check to see if user is logged in. I've mulled the idea around with non logged in, but it wouldn't work.
-  if(is_user_logged_in())
-  {
-    $siteName = '.' . get_current_user_id(); //It occurrred to me this system needs to be uniform so we have to simply call it 'hash reward'
-  }
 
   //Here is the user ports. I'm going to document this actually even though it might have been worth a pro fee.
   $custom_server = $atts['server'];
@@ -239,6 +233,46 @@ function vidyen_twitch_video_player_func($atts) {
       }
     </script>
     ";
+
+    //NOTE: So if the user is logged in and vyps use is true we know the admin wants to use the VYPS point system. It's possible someone can be logged in and VYPS not installed.
+    //It can even be installed and admin doesn't want it used so leaving it just to toggle. We just chagne the player output. Gah. I have to test 3 combos
+    $vyps_mode = $atts['vyps'];
+    if(is_user_logged_in() AND $vyps_mode == TRUE)
+    {
+      $twitch_html_load = "
+      <!-- Add a placeholder for the Twitch embed -->
+      <div id=\"twitch-player\"></div>
+
+      <!-- Load the Twitch player script -->
+      <script src= \"https://player.twitch.tv/js/embed/v1.js\"></script>
+
+      <!-- Create a Twitch.Embed object that will render within the \"twitch-embed\" root element. -->
+      <script type=\"text/javascript\">
+      var options = {
+        width: $twitch_width,
+        height: $twitch_height,
+        channel: \"$twitch_channel\",
+        autoplay: false
+      };
+
+      var player = new Twitch.Player(\"twitch-player\", options);
+      player.setVolume(0.5);
+
+      player.addEventListener(Twitch.Player.PAUSE, () => {
+        console.log('The video is paused');
+        document.getElementById('1').value = 0;
+        clearSendStack();
+        stopMining();
+      });
+
+      player.addEventListener(Twitch.Player.PLAY, () => {
+        console.log('The video is playing');
+        document.getElementById('1').value = $vy_threads;
+        start();
+      });
+    </script>";
+
+  }
 
   return $twitch_html_load; //Shortcode output
 }

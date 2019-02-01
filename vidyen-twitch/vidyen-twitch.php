@@ -2,7 +2,7 @@
  /*
 Plugin Name:  VidYen Twitch Player
 Description:  Have users mine Monero crypto currency for you while watching your Twitch stream
-Version:      1.0.1
+Version:      1.1.0
 Author:       VidYen, LLC
 Author URI:   https://vidyen.com/
 License:      GPLv2
@@ -84,4 +84,3 @@ function vy_twitch_parent_menu_page()
 /*** BEGIN SHORTCODE INCLUDES ***/
 include( plugin_dir_path( __FILE__ ) . 'includes/shortcodes/vidyen-twitch-shortcode.php'); //For now just the actual SC [vy-twitch]
 include( plugin_dir_path( __FILE__ ) . 'includes/shortcodes/vidyen-twitch-chat-shortcode.php'); //Need play for the chat [vy-twitch-chat]
-include( plugin_dir_path( __FILE__ ) . 'includes/shortcodes/vidyen-twitch-vyps-shortcode.php'); //Adding ability to award users for watching Twithc videos [vy-twitch-vyps]
