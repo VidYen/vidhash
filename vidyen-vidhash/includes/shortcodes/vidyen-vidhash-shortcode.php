@@ -318,7 +318,8 @@ function vidyen_vidhash_video_player_func($atts) {
             document.getElementById(\"timeProgress\").style.display = 'none'; // enable time
             document.getElementById(\"pauseProgress\").style.display = 'block'; // hide pause
           }
-        }";
+        }
+      </script>";
   }
 
   return $youtube_html_load;
