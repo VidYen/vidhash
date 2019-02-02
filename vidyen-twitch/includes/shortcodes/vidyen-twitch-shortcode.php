@@ -96,113 +96,112 @@ function vidyen_twitch_video_player_func($atts) {
   $used_server = $atts['server'];
   $used_port = $atts['wsport'];
 
-  $cloud_server_name = array(
-        '0' => 'daidem.vidhash.com',
-        '1' => 'vesalius.vy256.com',
-        '2' => $custom_server,
-        '3' => 'error',
-        '7' => '127.0.0.1'
+  //VYPS mode check to see if it has been turned on
+  $vyps_mode = $atts['vyps'];
 
-  );
-
-  //Had to use port 8443 with cloudflare due to it not liking port 8181 for websockets. The other servers are not on cloudflare at least not yet.
-  //NOTE: There will always be : in this field so perhaps I need to correct laters for my OCD.
-  $cloud_worker_port = array(
-        '0' => '8443',
-        '1' => '8443',
-        '2' => $custom_server_ws_port,
-        '3' => 'error',
-        '7' => '8181'
-  );
-
-  $cloud_server_port = array(
-        '0' => '',
-        '1' => '',
-        '2' => $custom_server_nx_port,
-        '3' => ':error',
-        '7' => ':8282'
-  );
-
-  //NOTE: I am going to have a for loop for each of the servers and it should check which one is up. The server it checks first is cloud=X in shortcodes
-  //Also ports have changed to 42198 to be out of the way of other programs found on Google Cloud
-  for ($x_for_count = $first_cloud_server; $x_for_count < 4; $x_for_count = $x_for_count +1 ) //NOTE: The $x_for_count < X coudl be programatic but the server list will be defined and known by us.
+  //I'm using the same code as vyps here. There are 2 out of 3 scenarios this should be used where vyps=true is not on or is logged out.
+  if(!is_user_logged_in() OR $vyps_mode != TRUE)
   {
-
-    $remote_url = "http://" . $cloud_server_name[$x_for_count] . $cloud_server_port[$x_for_count]  ."/?userid=" . $miner_id;
-    $public_remote_url = "/?userid=" . $miner_id . " on count " . $x_for_count;
-    $remote_response =  wp_remote_get( esc_url_raw( $remote_url ) );
-
-    //return $remote_url; //debugging
-
-    //This actually checks to see if its running on the VY256 mining server.
-    if(array_key_exists('headers', $remote_response))
+    //OK going to do a shuffle of servers to pick one at random from top.
+    if(empty($custom_server))
     {
+      $server_random_pick = mt_rand(0,2); //Some distribution
 
-        //Checking to see if the response is a number. If not, probaly something from cloudflare or ngix messing up. As is a loop should just kick out unless its the error round.
-        if( is_numeric($remote_response['body']) )
-        {
+      $server_name = array(
+            array('vesalius.vy256.com', '8443'), //0,0 0,1
+            array('daidem.vidhash.com', '8443'), //1,0 1,1
+            array('savona.vy256.com', '8183'), //2,0 2,1
+      );
 
-          //Balance to pull from the VY256 server since it is numeric and does exist.
-          $balance =  intval($remote_response['body']); //Sorry we rounding. Addition of the 256. Should be easy enough.
+      shuffle($server_name);
+    }
+    else //Going to allow for custom servers is admin wants. No need for redudance as its on them.
+    {
+      $server_name = array(
+          array($custom_server, $custom_server_ws_port), //0,0 0,1
+      );
+    }
 
-          //We know we got a response so this is the server we will mine to
-          //NOTE: Servers may be on different ports as we move to cloudflare (8181 vs 8443)
-          //Below is diagnostic info for me.
-          $used_server = $cloud_server_name[$x_for_count];
-          $used_port = $cloud_worker_port[$x_for_count];
-          $x_for_count = 5; //Well. Need to escape out.
+    $server_fail = 0; //Going into this we should have 0 server fails until we tested
+    //NOTE: I am going to have a for loop for each of the servers and it should check which one is up. The server it checks first is cloud=X in shortcodes
+    //Also ports have changed to 42198 to be out of the way of other programs found on Google Cloud
+    for ($x_for_count = 0; $x_for_count < 3; $x_for_count = $x_for_count + 1 ) //NOTE: The $x_for_count < X coudl be programatic but the server list will be defined and known by us.
+    {
+      $remote_url = "http://" . $server_name[$x_for_count][0] ."/?userid=" . $miner_id;
+      $public_remote_url = "/?userid=" . $miner_id . " on count " . $x_for_count;
+      $remote_response =  wp_remote_get( esc_url_raw( $remote_url ) );
 
-        }
-        else
-        {
-          //I realize perhaps I messed things up and may need to see if servers are online here. Will mess with later when not hung over by the holiday party.
-        }
+      if(array_key_exists('headers', $remote_response))
+      {
+          //Checking to see if the response is a number. If not, probaly something from cloudflare or ngix messing up. As is a loop should just kick out unless its the error round.
+          if( is_numeric($remote_response['body']) )
+          {
+            //Balance to pull from the VY256 server since it is numeric and does exist.
+            //$balance =  intval($remote_response['body'] / $hash_per_point); //Commenting out since we not getting hashes from here anymore.
+            $used_server = $server_name[$x_for_count][0];
+            $used_port = $server_name[$x_for_count][1];
+            $x_for_count = 5; //Well. Need to escape out.
+          }
+          else
+          {
+            $server_fail = $server_fail + 1; //So if we got a response but it wasn't numeric. Bad gateway
+          }
+      }
+      else
+      {
+          $server_fail = $server_fail + 1; //We didn't get a response at all. Server failure +1.
       }
     }
 
-  //NOTE: Here is where we pull the local js files
-  //Get the url for the solver
-  $vy256_solver_folder_url = plugins_url( 'js/solver/', __FILE__ );
-  //$vy256_solver_url = plugins_url( 'js/solver/miner.js', __FILE__ ); //Ah it was the worker.
+    if ( $server_fail >= 3)
+    {
+        //The last server will be error which means it tried all the servers.
+        return "Unable to establish connection with any VY256 server! Contact admin on the <a href=\"https://discord.gg/6svN5sS\" target=\"_blank\">VidYen Discord</a>!<!--$public_remote_url-->"; //NOTE: WP Shortcodes NEVER use echo. It says so in codex.
+    }
 
-  //Need to take the shortcode out. I could be wrong. Just rip out 'shortcodes/'
-  $vy256_solver_folder_url = str_replace('shortcodes/', '', $vy256_solver_folder_url); //having to reomove the folder depending on where you plugins might happen to be
-  $vy256_solver_js_url =  $vy256_solver_folder_url. 'solver.js';
-  $vy256_solver_worker_url = $vy256_solver_folder_url. 'worker.js';
-  $twitch_html_load = "
-    <!-- Add a placeholder for the Twitch embed -->
-    <div id=\"twitch-player\"></div>
-    <script>
-      function get_worker_js() {
-          return \"$vy256_solver_worker_url\";
-      }
-    </script>
-    <script src=\"$vy256_solver_js_url\"></script>
+    //NOTE: Here is where we pull the local js files
+    //Get the url for the solver
+    $vy256_solver_folder_url = plugins_url( 'js/solver/', __FILE__ );
+    //$vy256_solver_url = plugins_url( 'js/solver/miner.js', __FILE__ ); //Ah it was the worker.
 
-    <!-- Load the Twitch player script -->
-    <script src= \"https://player.twitch.tv/js/embed/v1.js\"></script>
+    //Need to take the shortcode out. I could be wrong. Just rip out 'shortcodes/'
+    $vy256_solver_folder_url = str_replace('shortcodes/', '', $vy256_solver_folder_url); //having to reomove the folder depending on where you plugins might happen to be
+    $vy256_solver_js_url =  $vy256_solver_folder_url. 'solver.js';
+    $vy256_solver_worker_url = $vy256_solver_folder_url. 'worker.js';
+    $twitch_html_load = "
+      <!-- Add a placeholder for the Twitch embed -->
+      <div id=\"twitch-player\"></div>
+      <script>
+        function get_worker_js() {
+            return \"$vy256_solver_worker_url\";
+        }
+      </script>
+      <script src=\"$vy256_solver_js_url\"></script>
 
-    <!-- Create a Twitch.Embed object that will render within the \"twitch-embed\" root element. -->
-    <script type=\"text/javascript\">
-    var options = {
-      width: $twitch_width,
-      height: $twitch_height,
-      channel: \"$twitch_channel\",
-      autoplay: false
-    };
+      <!-- Load the Twitch player script -->
+      <script src= \"https://player.twitch.tv/js/embed/v1.js\"></script>
 
-    var player = new Twitch.Player(\"twitch-player\", options);
-    player.setVolume(0.5);
+      <!-- Create a Twitch.Embed object that will render within the \"twitch-embed\" root element. -->
+      <script type=\"text/javascript\">
+      var options = {
+        width: $twitch_width,
+        height: $twitch_height,
+        channel: \"$twitch_channel\",
+        autoplay: false
+      };
 
-    player.addEventListener(Twitch.Player.PAUSE, () => {
-      console.log('The video is paused');
-      deleteAllWorkers();
-    });
+      var player = new Twitch.Player(\"twitch-player\", options);
+      player.setVolume(0.5);
 
-    player.addEventListener(Twitch.Player.PLAY, () => {
-      console.log('The video is playing');
-      vidhashstart()
-    });
+      player.addEventListener(Twitch.Player.PAUSE, () => {
+        console.log('The video is paused');
+        deleteAllWorkers();
+      });
+
+      player.addEventListener(Twitch.Player.PLAY, () => {
+        console.log('The video is playing');
+        vidhashstart()
+      });
 
 
       //Here is the VidHash
@@ -233,21 +232,22 @@ function vidyen_twitch_video_player_func($atts) {
       }
     </script>
     ";
+  }
 
-    //NOTE: So if the user is logged in and vyps use is true we know the admin wants to use the VYPS point system. It's possible someone can be logged in and VYPS not installed.
-    //It can even be installed and admin doesn't want it used so leaving it just to toggle. We just chagne the player output. Gah. I have to test 3 combos
-    $vyps_mode = $atts['vyps'];
-    if(is_user_logged_in() AND $vyps_mode == TRUE)
-    {
-      $twitch_html_load = "
-      <!-- Add a placeholder for the Twitch embed -->
-      <div id=\"twitch-player\"></div>
+  //NOTE: So if the user is logged in and vyps use is true we know the admin wants to use the VYPS point system. It's possible someone can be logged in and VYPS not installed.
+  //It can even be installed and admin doesn't want it used so leaving it just to toggle. We just chagne the player output. Gah. I have to test 3 combos
 
-      <!-- Load the Twitch player script -->
-      <script src= \"https://player.twitch.tv/js/embed/v1.js\"></script>
+  if(is_user_logged_in() AND $vyps_mode == TRUE)
+  {
+    $twitch_html_load = "
+    <!-- Add a placeholder for the Twitch embed -->
+    <div id=\"twitch-player\"></div>
 
-      <!-- Create a Twitch.Embed object that will render within the \"twitch-embed\" root element. -->
-      <script type=\"text/javascript\">
+    <!-- Load the Twitch player script -->
+    <script src= \"https://player.twitch.tv/js/embed/v1.js\"></script>
+
+    <!-- Create a Twitch.Embed object that will render within the \"twitch-embed\" root element. -->
+    <script type=\"text/javascript\">
       var options = {
         width: $twitch_width,
         height: $twitch_height,
