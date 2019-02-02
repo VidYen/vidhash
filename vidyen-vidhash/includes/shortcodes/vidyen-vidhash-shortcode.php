@@ -289,9 +289,9 @@ function vy_vidhash_consent_action()
 }
 
 /*** Fix for the ajaxurl not found with custom template sites ***/
-add_action('wp_head', 'myplugin_ajaxurl');
+add_action('wp_head', 'vidyen_vidhash_plugin_ajaxurl');
 
-function myplugin_ajaxurl()
+function vidyen_vidhash_plugin_ajaxurl()
 {
    echo '<script type="text/javascript">
            var ajaxurl = "' . admin_url('admin-ajax.php') . '";
