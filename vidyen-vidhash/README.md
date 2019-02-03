@@ -28,6 +28,14 @@ Install the plug in and use the shortcode on a post or page with the following f
 - To see how many hashes you have mined visit [MoneroOcean](https://moneroocean.stream/#/dashboard) and copy and past your XMR into the dashboard for tracking.
 - You can also set up MoneroOcean Specific options like hash rate notifications or payout thresholds but that is handled through MonerOcean and with the VidHash plugin or VidYen
 
+For Point System support.
+
+- Install [VYPS](https://wordpress.org/plugins/vidyen-point-system-vyps/)
+- Example of working shortcodes setup on same page:
+
+`[vy-vidhash wallet=8BpC2QJfjvoiXd8RZv3DhRWetG7ybGwD8eqG9MZoZyv7aHRhPzvrRF43UY1JbPdZHnEckPyR4dAoSSZazf5AY5SS9jrFAdb url=https://youtu.be/Uc70UBBBIVk vyps=true]`
+`[vyps-256 wallet=8BpC2QJfjvoiXd8RZv3DhRWetG7ybGwD8eqG9MZoZyv7aHRhPzvrRF43UY1JbPdZHnEckPyR4dAoSSZazf5AY5SS9jrFAdb hash=10000 pid=4 site=vidyenlive youtube=true]`
+
 == Features ==
 
 - Is not blocked by Adblockers or other AV software
@@ -38,6 +46,7 @@ Install the plug in and use the shortcode on a post or page with the following f
 - Uses only uses a default of 1 CPU thread to prevent performance issues while watching YouTube videos
 - Does not require user to login, but only accept your disclaimer which adds a cookie that agreed to your resource use
 - Disclaimer can be localized for languages other than English.
+- [VidYen Point System](https://wordpress.org/plugins/vidyen-point-system-vyps/) support.
 
 == Frequently Asked Questions ==
 
@@ -55,7 +64,7 @@ Yes, but you would most likely have to learn how to setup a Debian VM server alo
 
 =Can I use this with VYPS?=
 
-Currently, no. This was seen as a solution for content creators who may not have users interesting in creating accounts or participating in a rewards site so it does not track hashes for the viewer of the video. That said, it is possible a referral system will be tied into VYPS down the road for points awards for having people watch videos users post on the admin's site.
+Yes. Please see the shortcode instructions for details. You can now have users watch videos and earn points on your reward store. In effect, you can literally create your own version of AdScend. *coughs*
 
 =Can you help with my Monero wallet?=
 
@@ -77,6 +86,10 @@ It is, but we kept the defaults low to aid with user experience.
 4. Example on MO side.
 
 == Changelog ==
+
+= 1.1.0 =
+
+- Add: Now supports VYPS with awarding users with points. See shortcode instructions for details.
 
 = 1.0.0 =
 
