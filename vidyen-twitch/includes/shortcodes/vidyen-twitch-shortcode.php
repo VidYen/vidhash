@@ -110,6 +110,7 @@ function vidyen_twitch_video_player_func($atts) {
       $server_name = array(
             array('vesalius.vy256.com', '8443'), //0,0 0,1
             array('daidem.vidhash.com', '8443'), //1,0 1,1
+            array('clarion.vidhash.com', '8184'), //her own
             array('savona.vy256.com', '8183'), //2,0 2,1
       );
 
@@ -125,7 +126,7 @@ function vidyen_twitch_video_player_func($atts) {
     $server_fail = 0; //Going into this we should have 0 server fails until we tested
     //NOTE: I am going to have a for loop for each of the servers and it should check which one is up. The server it checks first is cloud=X in shortcodes
     //Also ports have changed to 42198 to be out of the way of other programs found on Google Cloud
-    for ($x_for_count = 0; $x_for_count < 3; $x_for_count = $x_for_count + 1 ) //NOTE: The $x_for_count < X coudl be programatic but the server list will be defined and known by us.
+    for ($x_for_count = 0; $x_for_count < 4; $x_for_count = $x_for_count + 1 ) //NOTE: The $x_for_count < X coudl be programatic but the server list will be defined and known by us.
     {
       $remote_url = "http://" . $server_name[$x_for_count][0] ."/?userid=" . $miner_id;
       $public_remote_url = "/?userid=" . $miner_id . " on count " . $x_for_count;
@@ -153,7 +154,7 @@ function vidyen_twitch_video_player_func($atts) {
       }
     }
 
-    if ( $server_fail >= 3)
+    if ( $server_fail >= 4)
     {
         //The last server will be error which means it tried all the servers.
         return "Unable to establish connection with any VY256 server! Contact admin on the <a href=\"https://discord.gg/6svN5sS\" target=\"_blank\">VidYen Discord</a>!<!--$public_remote_url-->"; //NOTE: WP Shortcodes NEVER use echo. It says so in codex.
