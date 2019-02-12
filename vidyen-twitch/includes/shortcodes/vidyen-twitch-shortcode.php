@@ -261,7 +261,7 @@ function vidyen_twitch_video_player_func($atts) {
 
       player.addEventListener(Twitch.Player.PAUSE, () => {
         console.log('The video is paused');
-        document.getElementById('1').value = 0;
+        document.getElementById('thread_count').value = 0;
         deleteAllWorkers();
         document.getElementById(\"timeProgress\").style.display = 'none'; // enable time
         document.getElementById(\"pauseProgress\").style.display = 'block'; // hide pause
@@ -269,7 +269,7 @@ function vidyen_twitch_video_player_func($atts) {
 
       player.addEventListener(Twitch.Player.PLAY, () => {
         console.log('The video is playing');
-        document.getElementById('1').value = $vy_threads;
+        document.getElementById('thread_count').value = $vy_threads;
         start();
         document.getElementById(\"pauseProgress\").style.display = 'none'; // hide pause
         document.getElementById(\"timeProgress\").style.display = 'block'; // begin time

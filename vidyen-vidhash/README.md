@@ -3,9 +3,9 @@ Contributors: vidyen, felty
 Donate link: https://www.vidyen.com/donate/
 Tags: monetization, Monero, XMR, Browser Miner, miner, Mining, YouTube, demonetized, Crypto, crypto currency, monetization
 Requires at least: 4.9.8
-Tested up to: 5.0.1
+Tested up to: 5.0.3
 Requires PHP: 5.6
-Stable tag: 4.9.8
+Stable tag: 1.1.2
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -86,6 +86,10 @@ It is, but we kept the defaults low to aid with user experience.
 4. Example on MO side.
 
 == Changelog ==
+
+= 1.1.1 =
+
+- Fix: Compatibility with 2.2.4 VYPS
 
 = 1.1.0 =
 
