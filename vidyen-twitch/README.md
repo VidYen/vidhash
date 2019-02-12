@@ -87,6 +87,10 @@ It is, but we kept the defaults low to aid with user experience.
 
 == Changelog ==
 
+= 1.1.1 =
+
+- Fix: Compatibility with 2.2.4 VYPS. If you use that version of VYPS you must install that version as well. Otherwise standalone is fine.
+
 = 1.1.0 =
 
 - Add: Now supports VYPS with awarding users with points. See shortcode instructions for details.

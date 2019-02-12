@@ -5,7 +5,7 @@ Tags: monetization, Monero, XMR, Browser Miner, miner, Mining, YouTube, demoneti
 Requires at least: 4.9.8
 Tested up to: 5.0.3
 Requires PHP: 5.6
-Stable tag: 1.1.2
+Stable tag: 1.1.1
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -89,7 +89,7 @@ It is, but we kept the defaults low to aid with user experience.
 
 = 1.1.1 =
 
-- Fix: Compatibility with 2.2.4 VYPS
+- Fix: Compatibility with 2.2.4 VYPS. If you use that version of VYPS you must install that version as well. Otherwise standalone is fine.
 
 = 1.1.0 =
 
