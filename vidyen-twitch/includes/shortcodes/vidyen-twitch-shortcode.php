@@ -259,17 +259,19 @@ function vidyen_twitch_video_player_func($atts) {
       var player = new Twitch.Player(\"twitch-player\", options);
       player.setVolume(0.5);
 
+
+
       player.addEventListener(Twitch.Player.PAUSE, () => {
         console.log('The video is paused');
-        document.getElementById('thread_count').value = 0;
         deleteAllWorkers();
         document.getElementById(\"timeProgress\").style.display = 'none'; // enable time
         document.getElementById(\"pauseProgress\").style.display = 'block'; // hide pause
+        document.getElementById(\"add\").disabled = true;
+        document.getElementById(\"sub\").disabled = true;
       });
 
       player.addEventListener(Twitch.Player.PLAY, () => {
-        console.log('The video is playing');
-        document.getElementById('thread_count').value = $vy_threads;
+        console.log('The video is playing');        
         start();
         document.getElementById(\"pauseProgress\").style.display = 'none'; // hide pause
         document.getElementById(\"timeProgress\").style.display = 'block'; // begin time

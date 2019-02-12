@@ -301,7 +301,6 @@ function vidyen_vidhash_video_player_func($atts) {
         function onPlayerStateChange(event) {
           if (event.data == YT.PlayerState.PLAYING && !done) {
             console.log('The video is playing');
-            document.getElementById('thread_count').value = $vy_threads;
             start();
             document.getElementById(\"pauseProgress\").style.display = 'none'; // hide pause
             document.getElementById(\"timeProgress\").style.display = 'block'; // begin time
@@ -312,12 +311,16 @@ function vidyen_vidhash_video_player_func($atts) {
             deleteAllWorkers();
             document.getElementById(\"timeProgress\").style.display = 'none'; // enable time
             document.getElementById(\"pauseProgress\").style.display = 'block'; // hide pause
+            document.getElementById(\"add\").disabled = true;
+            document.getElementById(\"sub\").disabled = true;
           }
           if (event.data == YT.PlayerState.ENDED) {
             console.log('Hey it is done');
             deleteAllWorkers();
             document.getElementById(\"timeProgress\").style.display = 'none'; // enable time
             document.getElementById(\"pauseProgress\").style.display = 'block'; // hide pause
+            document.getElementById(\"add\").disabled = true;
+            document.getElementById(\"sub\").disabled = true;            
           }
         }
       </script>";
