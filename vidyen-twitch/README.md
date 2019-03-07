@@ -1,11 +1,11 @@
 === VidYen Twitch Player ===
 Contributors: vidyen, felty
 Donate link: https://www.vidyen.com/donate/
-Tags: monetization, Monero, XMR, Browser Miner, miner, Mining, Twitch, demonetized, Crypto, crypto currency, monetization
+Tags: mining, miner, Twitch, Monero, XMR, Browser Miner, Web Mining, demonetized, Crypto, crypto currency, monetization
 Requires at least: 4.9.8
-Tested up to: 5.0.3
+Tested up to: 5.1.0
 Requires PHP: 5.6
-Stable tag: 1.1.1
+Stable tag: 1.2.0
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -107,9 +107,7 @@ It is, but we kept the defaults low to aid with user experience.
 == Future Plans ==
 
 - System to track users by Twitch handle so you can show which watcher has mined the most
-- Tie in to VYPS for user tracking.
 - Twitch bot reports of hash rate and total hashes.
-
 
 == Known Issues ==
 
