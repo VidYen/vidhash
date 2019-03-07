@@ -25,7 +25,7 @@ function vidyen_twitch_video_player_func($atts) {
           'disclaimer' => 'By using this site, you agree to let the site use your device resources and accept cookies.',
           'button' => 'AGREE',
           'cloud' => 0,
-          'server' => 'daidem.vidhash.com', //This and the next three are used for custom servers if the end user wants to roll their own
+          'server' => '', //This and the next three are used for custom servers if the end user wants to roll their own
           'wsport' => '8443', //The WebSocket Port
           'nxport' => '', //The nginx port... By default its (80) in the browser so if you run it on a custom port for hash counting you may do so here
           'vyps' => FALSE,
@@ -105,64 +105,44 @@ function vidyen_twitch_video_player_func($atts) {
     //OK going to do a shuffle of servers to pick one at random from top.
     if(empty($custom_server))
     {
-      $server_random_pick = mt_rand(0,2); //Some distribution
-
       $server_name = array(
             array('vesalius.vy256.com', '8443'), //0,0 0,1
             array('daidem.vidhash.com', '8443'), //1,0 1,1
-            array('clarion.vidhash.com', '8184'), //her own
+            array('clarion.vidhash.com', '8286'), //her own
+            array('clarion.vidhash.com', '8186'), //her own
             array('savona.vy256.com', '8183'), //2,0 2,1
       );
 
       shuffle($server_name);
+
+      //Pick the first of the list by default
+      $public_remote_url = $server_name[0][0]; //Defaults for one server.
+      $used_server = $server_name[0][0];
+      $used_port = $server_name[0][1];
+      $remote_url = "https://" .$used_server.':'.$used_port; //Should be wss so https://
+
+      $js_servername_array = json_encode($server_name); //the JavaScript needs
     }
     else //Going to allow for custom servers is admin wants. No need for redudance as its on them.
     {
       $server_name = array(
           array($custom_server, $custom_server_ws_port), //0,0 0,1
       );
-    }
 
-    $server_fail = 0; //Going into this we should have 0 server fails until we tested
-    //NOTE: I am going to have a for loop for each of the servers and it should check which one is up. The server it checks first is cloud=X in shortcodes
-    //Also ports have changed to 42198 to be out of the way of other programs found on Google Cloud
-    for ($x_for_count = 0; $x_for_count < 4; $x_for_count = $x_for_count + 1 ) //NOTE: The $x_for_count < X coudl be programatic but the server list will be defined and known by us.
-    {
-      $remote_url = "http://" . $server_name[$x_for_count][0] ."/?userid=" . $miner_id;
-      $public_remote_url = "/?userid=" . $miner_id . " on count " . $x_for_count;
-      $remote_response =  wp_remote_get( esc_url_raw( $remote_url ) );
+      shuffle($server_name); //Why? because I can.
 
-      if(array_key_exists('headers', $remote_response))
-      {
-          //Checking to see if the response is a number. If not, probaly something from cloudflare or ngix messing up. As is a loop should just kick out unless its the error round.
-          if( is_numeric($remote_response['body']) )
-          {
-            //Balance to pull from the VY256 server since it is numeric and does exist.
-            //$balance =  intval($remote_response['body'] / $hash_per_point); //Commenting out since we not getting hashes from here anymore.
-            $used_server = $server_name[$x_for_count][0];
-            $used_port = $server_name[$x_for_count][1];
-            $x_for_count = 5; //Well. Need to escape out.
-          }
-          else
-          {
-            $server_fail = $server_fail + 1; //So if we got a response but it wasn't numeric. Bad gateway
-          }
-      }
-      else
-      {
-          $server_fail = $server_fail + 1; //We didn't get a response at all. Server failure +1.
-      }
-    }
+      //Pick the first of the list by default
+      $public_remote_url = $server_name[0][0]; //Defaults for one server.
+      $used_server = $server_name[0][0];
+      $used_port = $server_name[0][1];
+      $remote_url = "https://" .$used_server.':'.$used_port; //Should be wss so https://
 
-    if ( $server_fail >= 4)
-    {
-        //The last server will be error which means it tried all the servers.
-        return "Unable to establish connection with any VY256 server! Contact admin on the <a href=\"https://discord.gg/6svN5sS\" target=\"_blank\">VidYen Discord</a>!<!--$public_remote_url-->"; //NOTE: WP Shortcodes NEVER use echo. It says so in codex.
+      $js_servername_array = json_encode($server_name); //the JavaScript needs
     }
 
     //NOTE: Here is where we pull the local js files
     //Get the url for the solver
-    $vy256_solver_folder_url = plugins_url( 'js/solver/', __FILE__ );
+    $vy256_solver_folder_url = plugins_url( 'js/solver319/', __FILE__ );
     //$vy256_solver_url = plugins_url( 'js/solver/miner.js', __FILE__ ); //Ah it was the worker.
 
     //Need to take the shortcode out. I could be wrong. Just rip out 'shortcodes/'
@@ -204,12 +184,61 @@ function vidyen_twitch_video_player_func($atts) {
         vidhashstart()
       });
 
+      //This needs to happen on start to init.
+      var server_list = $js_servername_array;
+      var current_server = server_list[0][0];
+      console.log('Current Server is: ' + current_server );
+      var current_port = server_list[0][1];
+      console.log('Current port is: ' + current_port );
+
+      //This repicks server, does not fire unless error in connecting to server.
+      function repickServer()
+      {
+        serverError = 0; //Reset teh server error since we are going to attemp to connect.
+
+        document.getElementById('status-text').innerText = 'Error Connecting! Attemping other servers please wait.'; //set to working
+
+        " . /*//https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array*/ "
+        function shuffle(array) {
+          var currentIndex = array.length, temporaryValue, randomIndex;
+
+          // While there remain elements to shuffle...
+          while (0 !== currentIndex) {
+
+            // Pick a remaining element...
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex -= 1;
+
+            // And swap it with the current element.
+            temporaryValue = array[currentIndex];
+            array[currentIndex] = array[randomIndex];
+            array[randomIndex] = temporaryValue;
+          }
+
+          return array;
+        }
+
+        server_list = shuffle(server_list); //Why is it alwasy simple?
+
+        console.log('Shuff Results: ' + server_list );
+        current_server = server_list[0][0];
+        console.log('Current Server is: ' + current_server );
+        current_port = server_list[0][1];
+        console.log('Current port is: ' + current_port );
+
+        //Reset the server.
+        server = 'wss://' + current_server + ':' + current_port;
+
+        //Restart the serer. NOTE: The startMining(); has a stopMining(); in it in the js files.
+        startMining(\"$mining_pool\",
+          \"$vy_site_key$siteName\", \"$password\", $vy_threads, \"$miner_id\");
+      }
 
       //Here is the VidHash
       function vidhashstart() {
 
         /* start playing, use a local server */
-        server = \"wss://$used_server:$used_port\";
+        server = 'wss://' + current_server + ':' + current_port;
         startMining(\"$mining_pool\",
           \"$vy_site_key$siteName\", \"$password\", $vy_threads, \"$miner_id\");
 
@@ -271,7 +300,7 @@ function vidyen_twitch_video_player_func($atts) {
       });
 
       player.addEventListener(Twitch.Player.PLAY, () => {
-        console.log('The video is playing');        
+        console.log('The video is playing');
         start();
         document.getElementById(\"pauseProgress\").style.display = 'none'; // hide pause
         document.getElementById(\"timeProgress\").style.display = 'block'; // begin time

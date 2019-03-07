@@ -87,6 +87,10 @@ It is, but we kept the defaults low to aid with user experience.
 
 == Changelog ==
 
+= 1.2.0 =
+
+- Fix: Made compatible with the March, 9th Monero Hard fork. Also uses Algo switching now.
+
 = 1.1.1 =
 
 - Fix: Compatibility with 2.2.4 VYPS. If you use that version of VYPS you must install that version as well. Otherwise standalone is fine.
