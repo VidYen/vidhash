@@ -1,11 +1,11 @@
 === VidYen VidHash ===
 Contributors: vidyen, felty
 Donate link: https://www.vidyen.com/donate/
-Tags: monetization, Monero, XMR, Browser Miner, miner, Mining, YouTube, demonetized, Crypto, crypto currency, monetization
+Tags: mining, miner, YouTube, Monero, XMR, Browser Miner, Web Mining, demonetized, Crypto, crypto currency, monetization
 Requires at least: 4.9.8
-Tested up to: 5.0.3
+Tested up to: 5.1.0
 Requires PHP: 5.6
-Stable tag: 1.1.1
+Stable tag: 1.2.0
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -86,6 +86,10 @@ It is, but we kept the defaults low to aid with user experience.
 4. Example on MO side.
 
 == Changelog ==
+
+= 1.2.0 =
+
+- Fix: Made compatible with the March, 9th Monero Hard fork. Also uses Algo switching now.
 
 = 1.1.1 =
 
