@@ -149,6 +149,7 @@ function vidyen_twitch_video_player_func($atts) {
     $vy256_solver_folder_url = str_replace('shortcodes/', '', $vy256_solver_folder_url); //having to reomove the folder depending on where you plugins might happen to be
     $vy256_solver_js_url =  $vy256_solver_folder_url. 'solver.js';
     $vy256_solver_worker_url = $vy256_solver_folder_url. 'worker.js';
+    
     $twitch_html_load = "
       <!-- Add a placeholder for the Twitch embed -->
       <div id=\"twitch-player\"></div>
