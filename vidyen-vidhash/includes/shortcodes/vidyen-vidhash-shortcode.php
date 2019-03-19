@@ -101,14 +101,14 @@ function vidyen_vidhash_video_player_func($atts) {
     if(empty($custom_server))
     {
       $server_name = array(
+            array('savona.vy256.com', '8183'), //2,0 2,1
             array('vesalius.vy256.com', '8443'), //0,0 0,1
             array('daidem.vidhash.com', '8443'), //1,0 1,1
             array('clarion.vidhash.com', '8286'), //her own
-            array('clarion.vidhash.com', '8186'), //her own
-            array('savona.vy256.com', '8183'), //2,0 2,1
+            array('clarion.vidhash.com', '8186'), //her own            
       );
 
-      shuffle($server_name);
+      //shuffle($server_name); turn shuffle off. The js will shuffle if server down.
 
       //Pick the first of the list by default
       $public_remote_url = $server_name[0][0]; //Defaults for one server.
