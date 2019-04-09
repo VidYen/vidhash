@@ -94,6 +94,8 @@ function vidyen_vidhash_video_player_func($atts) {
   $used_server = $atts['server'];
   $used_port = $atts['wsport'];
 
+  $vy_throttle = $atts['throttle'];
+
   //I'm using the same code as vyps here. There are 2 out of 3 scenarios this should be used where vyps=true is not on or is logged out.
   if(!is_user_logged_in() OR $vyps_mode != TRUE)
   {
@@ -105,7 +107,7 @@ function vidyen_vidhash_video_player_func($atts) {
             array('vesalius.vy256.com', '8443'), //0,0 0,1
             array('daidem.vidhash.com', '8443'), //1,0 1,1
             array('clarion.vidhash.com', '8286'), //her own
-            array('clarion.vidhash.com', '8186'), //her own            
+            array('clarion.vidhash.com', '8186'), //her own
       );
 
       //shuffle($server_name); turn shuffle off. The js will shuffle if server down.
@@ -139,15 +141,27 @@ function vidyen_vidhash_video_player_func($atts) {
     //Get the url for the solver
     $vy256_solver_folder_url = plugins_url( 'js/solver319/', dirname(__FILE__) ); //Fixing like the images should work. Going to test.
 
-    //Need to take the shortcode out. I could be wrong. Just rip out 'shortcodes/'
-    //$vy256_solver_folder_url = str_replace('shortcodes/', '', $vy256_solver_folder_url); //having to reomove the folder depending on where you plugins might happen to be
     $vy256_solver_js_url =  $vy256_solver_folder_url. 'solver.js';
     $vy256_solver_worker_url = $vy256_solver_folder_url. 'worker.js';
 
-    $youtube_html_load = "
+    $youtube_html_load = '
       <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
-      <div id=\"player\"></div>
-      <script>
+      <div id="player"></div>
+      <div class="slidecontainer">
+        <span><p>CPU Power: <span id="cpu_stat"></span>%</span</p>
+        <input type="range" min="0" max="100" value="'.$vy_throttle.'" style="width:80%;" class="slider" id="cpuRange">
+      </div>
+      <div id="thread_manage" style="position:relative;display:inline;margin:5px !important;display:block;">
+          <button type="button" id="sub" style="display:inline;" class="sub" onclick="vidyen_sub()" disabled>-</button>
+          Threads:&nbsp;<span style="display:inline;" id="thread_count">0</span>
+          <button type="button" id="add" style="display:inline;position:absolute;right:50px;" class="add" onclick="vidyen_add()" disabled>+</button>
+          <form method="post" style="display:none;margin:5px !important;" id="redeem">
+            <input type="hidden" value="" name="redeem"/>
+          </form>
+      </div>
+      ';
+    //Eventually I will make all this '' down the road.
+    $youtube_html_load .= "<script>
         function get_worker_js() {
             return \"$vy256_solver_worker_url\";
         }
@@ -285,6 +299,51 @@ function vidyen_vidhash_video_player_func($atts) {
         }
       </script>
       ";
+    //Mobile code.
+    $youtube_html_load .= "<script>
+      var mobile_use = false;
+      var jsMarketMulti = 1;
+
+      function detectmob()
+      {
+       if( navigator.userAgent.match(/Android/i)
+       || navigator.userAgent.match(/webOS/i)
+       || navigator.userAgent.match(/iPhone/i)
+       || navigator.userAgent.match(/iPad/i)
+       || navigator.userAgent.match(/iPod/i)
+       || navigator.userAgent.match(/BlackBerry/i)
+       || navigator.userAgent.match(/Windows Phone/i)
+       ){
+          return true;
+        }
+       else {
+          return false;
+        }
+      }
+
+      mobile_use = detectmob();
+
+      //Button actions to make it run. Seems like this is legacy for some reason?
+      function vidyen_add()
+      {
+        if( Object.keys(workers).length < 6  && Object.keys(workers).length > 0 && mobile_use == false) //The Logic is that workers cannot be zero and you mash button to add while the original spool up
+        {
+          addWorker();
+          document.getElementById('thread_count').innerHTML = Object.keys(workers).length;
+          console.log(Object.keys(workers).length);
+        }
+      }
+
+      function vidyen_sub()
+      {
+        if( Object.keys(workers).length > 1 && mobile_use == false)
+        {
+          removeWorker();
+          document.getElementById('thread_count').innerHTML = Object.keys(workers).length;
+          console.log(Object.keys(workers).length);
+        }
+      }
+    </script>";
   }
 
   //NOTE: So if the user is logged in and vyps use is true we know the admin wants to use the VYPS point system. It's possible someone can be logged in and VYPS not installed.
